@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
-        'name' => 'siska/core',
+        'name' => 'siska/backend',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'b43518eb99c3e8050c74491b9221995125799779',
+        'reference' => '172838f273b853afea6528dcf65f738c4b43c7c5',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -1031,10 +1031,10 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
-        'siska/core' => array(
+        'siska/backend' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'b43518eb99c3e8050c74491b9221995125799779',
+            'reference' => '172838f273b853afea6528dcf65f738c4b43c7c5',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

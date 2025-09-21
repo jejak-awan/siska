@@ -412,8 +412,8 @@ class ComposerStaticInit9dad4df269a05cec73446b35cf01fb1b
         ),
         'League\\Uri\\' => 
         array (
-            0 => __DIR__ . '/..' . '/league/uri-interfaces',
-            1 => __DIR__ . '/..' . '/league/uri',
+            0 => __DIR__ . '/..' . '/league/uri',
+            1 => __DIR__ . '/..' . '/league/uri-interfaces',
         ),
         'League\\MimeTypeDetection\\' => 
         array (
@@ -567,6 +567,7 @@ class ComposerStaticInit9dad4df269a05cec73446b35cf01fb1b
     );
 
     public static $classMap = array (
+        'App\\Models\\BaseModel' => __DIR__ . '/../..' . '/app/Models/BaseModel.php',
         'App\\Models\\Core\\License' => __DIR__ . '/../..' . '/app/Models/Core/License.php',
         'App\\Models\\Core\\ProfilSekolah' => __DIR__ . '/../..' . '/app/Models/Core/ProfilSekolah.php',
         'App\\Models\\Core\\Semester' => __DIR__ . '/../..' . '/app/Models/Core/Semester.php',
@@ -576,6 +577,7 @@ class ComposerStaticInit9dad4df269a05cec73446b35cf01fb1b
         'App\\Models\\Public\\KomponenProgram' => __DIR__ . '/../..' . '/app/Models/Public/KomponenProgram.php',
         'App\\Models\\Public\\PostinganUmum' => __DIR__ . '/../..' . '/app/Models/Public/PostinganUmum.php',
         'App\\Models\\Public\\Program' => __DIR__ . '/../..' . '/app/Models/Public/Program.php',
+        'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Services\\Core\\LicenseService' => __DIR__ . '/../..' . '/app/Services/Core/LicenseService.php',
         'App\\Services\\Public\\PublicContentService' => __DIR__ . '/../..' . '/app/Services/Public/PublicContentService.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
