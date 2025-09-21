@@ -22,7 +22,7 @@ class License extends Model
     protected $fillable = [
         'license_key',
         'installation_id',
-        'school_id',
+        'sekolah_id',
         'license_type',
         'jenjang_access',
         'features',
@@ -92,10 +92,10 @@ class License extends Model
     }
 
     /**
-     * Relasi ke School Profile
+     * Relasi ke Profil Sekolah
      */
-    public function school()
+    public function sekolah()
     {
-        return $this->belongsTo(SchoolProfile::class, 'school_id');
+        return $this->belongsTo(ProfilSekolah::class, 'sekolah_id');
     }
 }

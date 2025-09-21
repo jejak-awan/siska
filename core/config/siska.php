@@ -13,7 +13,7 @@ return [
     'version' => env('SISKA_VERSION', '1.0.0'),
     'license_key' => env('SISKA_LICENSE_KEY'),
     'installation_id' => env('SISKA_INSTALLATION_ID'),
-    'school_id' => env('SISKA_SCHOOL_ID'),
+    'sekolah_id' => env('SISKA_SEKOLAH_ID'),
     'active_jenjang' => env('SISKA_ACTIVE_JENJANG'),
     'multi_jenjang' => env('SISKA_MULTI_JENJANG', false),
 
@@ -191,13 +191,13 @@ return [
     'cache' => [
         'ttl' => [
             'license_info' => 3600, // 1 hour
-            'school_profile' => 1800, // 30 minutes
+            'profil_sekolah' => 1800, // 30 minutes
             'public_content' => 300, // 5 minutes
             'jenjang_config' => 3600, // 1 hour
         ],
         'tags' => [
             'license',
-            'school',
+            'sekolah',
             'public',
             'jenjang',
         ],

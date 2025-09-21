@@ -3,7 +3,7 @@
 namespace App\Services\Core;
 
 use App\Models\Core\License;
-use App\Models\Core\SchoolProfile;
+use App\Models\Core\ProfilSekolah;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
@@ -108,7 +108,7 @@ class LicenseService
             }
 
             $license = $validation['license'];
-            $school = $license->school;
+            $sekolah = $license->sekolah;
 
             return [
                 'license_key' => $license->license_key,
@@ -117,11 +117,11 @@ class LicenseService
                 'features' => $license->features,
                 'max_users' => $license->max_users,
                 'expires_at' => $license->expires_at,
-                'school' => $school ? [
-                    'nama_sekolah' => $school->nama_sekolah,
-                    'jenis_sekolah' => $school->jenis_sekolah,
-                    'jenjang_aktif' => $school->jenjang_aktif,
-                    'multi_jenjang' => $school->multi_jenjang,
+                'sekolah' => $sekolah ? [
+                    'nama_sekolah' => $sekolah->nama_sekolah,
+                    'jenis_sekolah' => $sekolah->jenis_sekolah,
+                    'jenjang_aktif' => $sekolah->jenjang_aktif,
+                    'multi_jenjang' => $sekolah->multi_jenjang,
                 ] : null,
             ];
         });
@@ -130,7 +130,7 @@ class LicenseService
     /**
      * Aktifkan lisensi
      */
-    public function activateLicense($licenseKey, $installationId, $schoolData)
+    public function activateLicense($licenseKey, $installationId, $sekolahData)
     {
         try {
             $license = License::where('license_key', $licenseKey)->first();
@@ -149,22 +149,22 @@ class LicenseService
                 ];
             }
 
-            // Create school profile
-            $school = SchoolProfile::create([
-                'nama_sekolah' => $schoolData['nama_sekolah'],
-                'jenis_sekolah' => $schoolData['jenis_sekolah'],
-                'jenjang_aktif' => $schoolData['jenjang_aktif'],
-                'multi_jenjang' => $schoolData['multi_jenjang'],
-                'alamat' => $schoolData['alamat'],
-                'telepon' => $schoolData['telepon'],
-                'email' => $schoolData['email'],
+            // Create profil sekolah
+            $sekolah = ProfilSekolah::create([
+                'nama_sekolah' => $sekolahData['nama_sekolah'],
+                'jenis_sekolah' => $sekolahData['jenis_sekolah'],
+                'jenjang_aktif' => $sekolahData['jenjang_aktif'],
+                'multi_jenjang' => $sekolahData['multi_jenjang'],
+                'alamat' => $sekolahData['alamat'],
+                'telepon' => $sekolahData['telepon'],
+                'email' => $sekolahData['email'],
                 'status' => true,
             ]);
 
             // Update license
             $license->update([
                 'installation_id' => $installationId,
-                'school_id' => $school->id,
+                'sekolah_id' => $sekolah->id,
                 'is_active' => true,
                 'activated_at' => now(),
                 'last_check' => now(),
@@ -176,7 +176,7 @@ class LicenseService
             return [
                 'success' => true,
                 'message' => 'Lisensi berhasil diaktifkan',
-                'school' => $school,
+                'sekolah' => $sekolah,
                 'license' => $license,
             ];
 

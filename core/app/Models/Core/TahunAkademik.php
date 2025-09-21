@@ -20,7 +20,7 @@ class TahunAkademik extends Model
     protected $table = 'tahun_akademik';
 
     protected $fillable = [
-        'school_id',
+        'sekolah_id',
         'tahun_akademik',
         'tanggal_mulai',
         'tanggal_selesai',
@@ -115,11 +115,11 @@ class TahunAkademik extends Model
     }
 
     /**
-     * Relasi ke School Profile
+     * Relasi ke Profil Sekolah
      */
-    public function school()
+    public function sekolah()
     {
-        return $this->belongsTo(SchoolProfile::class, 'school_id');
+        return $this->belongsTo(ProfilSekolah::class, 'sekolah_id');
     }
 
     /**

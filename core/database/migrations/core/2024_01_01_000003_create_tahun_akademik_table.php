@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::connection('core')->create('tahun_akademik', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('school_id')->constrained('school_profile')->onDelete('cascade')->comment('ID sekolah');
+            $table->foreignId('sekolah_id')->constrained('profil_sekolah')->onDelete('cascade')->comment('ID sekolah');
             $table->string('tahun_akademik')->comment('Tahun akademik (e.g., 2024/2025)');
             $table->date('tanggal_mulai')->comment('Tanggal mulai tahun akademik');
             $table->date('tanggal_selesai')->comment('Tanggal selesai tahun akademik');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->text('keterangan')->nullable()->comment('Keterangan tambahan');
             $table->timestamps();
 
-            $table->index(['school_id', 'is_active']);
+            $table->index(['sekolah_id', 'is_active']);
             $table->index(['tahun_akademik', 'status']);
             $table->index('tanggal_mulai');
             $table->index('tanggal_selesai');

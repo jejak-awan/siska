@@ -12,12 +12,12 @@ use Illuminate\Database\Eloquent\Model;
  * @author jejakawan.com
  * @supported K2NET - PT. Kirana Karina Network
  */
-class SchoolProfile extends Model
+class ProfilSekolah extends Model
 {
     use HasFactory;
 
     protected $connection = 'core';
-    protected $table = 'school_profile';
+    protected $table = 'profil_sekolah';
 
     protected $fillable = [
         'nama_sekolah',
@@ -97,7 +97,7 @@ class SchoolProfile extends Model
         if ($this->logo) {
             return asset('storage/' . $this->logo);
         }
-        return asset('images/default-school-logo.png');
+        return asset('images/default-sekolah-logo.png');
     }
 
     /**
@@ -105,7 +105,7 @@ class SchoolProfile extends Model
      */
     public function license()
     {
-        return $this->hasOne(License::class, 'school_id');
+        return $this->hasOne(License::class, 'sekolah_id');
     }
 
     /**
@@ -113,6 +113,6 @@ class SchoolProfile extends Model
      */
     public function tahunAkademik()
     {
-        return $this->hasMany(TahunAkademik::class, 'school_id');
+        return $this->hasMany(TahunAkademik::class, 'sekolah_id');
     }
 }

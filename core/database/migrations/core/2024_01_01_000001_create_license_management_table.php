@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('license_key')->unique()->comment('Kunci lisensi unik');
             $table->string('installation_id')->nullable()->comment('ID instalasi');
-            $table->foreignId('school_id')->nullable()->constrained('school_profile')->onDelete('set null')->comment('ID sekolah');
+            $table->foreignId('sekolah_id')->nullable()->constrained('profil_sekolah')->onDelete('set null')->comment('ID sekolah');
             $table->enum('license_type', ['trial', 'single', 'multi', 'enterprise'])->default('trial')->comment('Jenis lisensi');
             $table->json('jenjang_access')->nullable()->comment('Akses jenjang yang diizinkan');
             $table->json('features')->nullable()->comment('Fitur yang diizinkan');
@@ -28,7 +28,7 @@ return new class extends Migration
 
             $table->index(['license_key', 'is_active']);
             $table->index('installation_id');
-            $table->index('school_id');
+            $table->index('sekolah_id');
             $table->index('expires_at');
         });
     }
