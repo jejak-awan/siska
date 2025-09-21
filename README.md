@@ -59,6 +59,27 @@ refactor(scope): description # Code refactoring
 test(scope): description    # Tests
 ```
 
+## 📚 **DOKUMENTASI**
+
+### **Dokumentasi Strategi:**
+- **[Skema Database Isolated](docs/skema-database-isolated.md)** - Database schema untuk isolated architecture
+- **[Struktur Aplikasi Isolated](docs/struktur-aplikasi-isolated.md)** - Struktur aplikasi per jenjang
+- **[Strategi Git Integration](docs/strategi-git-integration.md)** - Git workflow dan branch strategy
+- **[Strategi Migrasi Folder Structure](docs/strategi-migrasi-folder-structure.md)** - Migrasi dari legacy ke isolated
+- **[Strategi Multi-Jenjang Flow](docs/strategi-multi-jenjang-flow.md)** - Flow diagram dan strategi multi-jenjang
+- **[Strategi Performa & Backup](docs/strategi-performa-backup-multi-jenjang.md)** - Optimasi performa dan backup strategy
+- **[Strategi Wizard Instalasi](docs/strategi-wizard-installasi-isolated.md)** - Installation wizard flow
+- **[Rekomendasi Dokumentasi](docs/rekomendasi-dokumentasi.md)** - Rekomendasi dokumentasi yang perlu dipertahankan
+- **[Template Header](docs/template-header.md)** - Template untuk header dokumentasi
+
+### **Dokumentasi Teknis:**
+- **[Core System](core/README.md)** - Dokumentasi core system
+- **[SD Module](jenjang/sd/README.md)** - Dokumentasi modul SD
+- **[Public System](public/README.md)** - Dokumentasi sistem publik
+- **[Installer Wizard](installer/README.md)** - Dokumentasi installer
+- **[Shared Components](shared/README.md)** - Dokumentasi komponen shared
+- **[Frontend](frontend/README.md)** - Dokumentasi frontend
+
 ## 🏗️ **STRUKTUR WORKSPACE**
 
 ```
@@ -115,6 +136,16 @@ siska/
     │   └── utils/
     ├── assets/
     └── public/
+└── docs/                       # Documentation
+    ├── skema-database-isolated.md
+    ├── struktur-aplikasi-isolated.md
+    ├── strategi-git-integration.md
+    ├── strategi-migrasi-folder-structure.md
+    ├── strategi-multi-jenjang-flow.md
+    ├── strategi-performa-backup-multi-jenjang.md
+    ├── strategi-wizard-installasi-isolated.md
+    ├── rekomendasi-dokumentasi.md
+    └── template-header.md
 ```
 
 ## 🚀 **QUICK START**
