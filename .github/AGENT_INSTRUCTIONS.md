@@ -1,8 +1,8 @@
-# Agent Instructions - SISKA Isolated Architecture
+# Agent Instructions - Sistem Informasi Sekolah Bidang Kesiswaan (SISKA)
 
 ## 📋 **INFORMASI PROYEK**
 
-**SISKA** (Sistem Informasi Sekolah Bidang Kesiswaan) adalah sistem manajemen kesiswaan terintegrasi dengan **Isolated Architecture** yang dirancang untuk mendukung multiple jenjang pendidikan (SD, SMP, SMA, SMK) dengan modul terpisah namun tetap menggunakan core system yang shared.
+**SISKA** (Sistem Informasi Sekolah Bidang Kesiswaan) adalah sistem manajemen kesiswaan terintegrasi yang dibangun dengan Laravel (Backend) dan Vue.js (Frontend). Sistem ini dirancang untuk mengelola seluruh aspek kesiswaan sekolah mulai dari manajemen siswa, guru, presensi, penilaian karakter, hingga ekstrakurikuler dan OSIS.
 
 ### 🏢 **PENGEMBANG & DUKUNGAN**
 
@@ -14,20 +14,44 @@
 **PT. Kirana Karina Network**  
 *"Provide Different IT Solutions"*
 
-## 🎯 **PROJECT OVERVIEW**
+## 🎯 Project Overview
 
 ### **Key Information:**
 - **Project Path**: `/opt/kesiswaan/siska`
-- **Architecture**: Isolated Architecture per Jenjang
+- **Architecture**: Isolated Jenjang Architecture
 - **Backend**: Laravel 11.35 (PHP 8.3+)
 - **Frontend**: Vue.js 3.5.21 dengan Composition API
-- **Database**: MySQL 8.0 dengan isolated databases
+- **Database**: MySQL 8.0 dengan multiple databases per jenjang
 - **Authentication**: Laravel Sanctum
 - **API Documentation**: Swagger/OpenAPI
-- **Status**: READY FOR DEVELOPMENT
-- **Timeline**: 12 weeks implementation
+- **Status**: READY FOR IMPLEMENTATION
+- **Timeline**: 10 weeks implementation
 
-## 🏗️ **ARCHITECTURE OVERVIEW**
+## 🏗️ **ISOLATED ARCHITECTURE OVERVIEW**
+
+### **Workspace Structure:**
+```
+/opt/kesiswaan/siska/
+├── core/                    # Core system (License, Profil Sekolah, etc.)
+├── jenjang/                 # Jenjang-specific modules
+│   ├── sd/                 # SD module
+│   ├── smp/                # SMP module
+│   ├── sma/                # SMA module
+│   └── smk/                # SMK module
+├── public/                  # Public content system
+├── installer/               # Installation wizard
+├── shared/                  # Shared components
+├── frontend/                # Frontend application
+└── docs/                    # Documentation
+```
+
+### **Database Architecture:**
+- **siska_core**: Core database (license, profil sekolah, tahun akademik, semester)
+- **siska_public**: Public database (postingan umum, program, kegiatan publik)
+- **siska_sd**: SD-specific database
+- **siska_smp**: SMP-specific database
+- **siska_sma**: SMA-specific database
+- **siska_smk**: SMK-specific database
 
 ### **Isolated Architecture Principles:**
 - **Core System**: Shared across all jenjang
@@ -36,11 +60,336 @@
 - **Installer Wizard**: Dynamic installation based on needs
 - **Shared Components**: Reusable components across modules
 
-### **Database Strategy:**
-- **Core Database**: `siska_core` (shared)
-- **Jenjang Databases**: `siska_sd`, `siska_smp`, `siska_sma`, `siska_smk`
-- **Public Database**: `siska_public` (shared)
-- **Isolation**: Each jenjang has its own database
+## 👥 User Roles & Permissions
+
+### 1. **Admin**
+- Full system access
+- User management
+- System configuration
+- School profile management
+
+### 2. **Guru**
+- Student management
+- Attendance tracking
+- Character assessment
+- Class management
+
+### 3. **Siswa**
+- Personal profile
+- Attendance view
+- Credit point tracking
+- Academic progress
+
+### 4. **Wali Kelas**
+- Class student management
+- Attendance monitoring
+- Parent communication
+
+### 5. **BK (Bimbingan Konseling)**
+- Student counseling
+- Character assessment
+- Home visit management
+
+### 6. **OSIS**
+- OSIS member management
+- Activity organization
+- Achievement tracking
+
+### 7. **Ekstrakurikuler**
+- Extracurricular management
+- Schedule management
+- Member management
+
+### 8. **Orang Tua**
+- Child's academic progress
+- Attendance monitoring
+- Communication with school
+
+## 🎯 Core Features
+
+### 1. **User Management System**
+- Multi-role authentication
+- User profile management
+- Role-based access control
+
+### 2. **Student Management**
+- Student registration and profiles
+- Class assignment
+- Academic year management
+
+### 3. **Attendance System**
+- Daily attendance tracking
+- QR code attendance
+- Attendance reports
+
+### 4. **Credit Point System**
+- Point-based behavior tracking
+- Category management
+- Point history
+
+### 5. **Character Assessment**
+- Multi-dimensional character evaluation
+- Assessment indicators
+- Progress tracking
+
+### 6. **Academic Management**
+- Class scheduling
+- Subject management
+- Academic year configuration
+
+### 7. **Extracurricular Management**
+- Activity organization
+- Member management
+- Schedule coordination
+
+### 8. **OSIS Management**
+- Member management
+- Activity planning
+- Leadership tracking
+
+### 9. **School Profile**
+- School information management
+- Logo and branding
+- Organizational structure
+
+### 10. **Content Management**
+- Gallery management
+- Content publishing
+- Media upload
+
+### 11. **Communication**
+- WhatsApp integration
+- Notification system
+- Parent communication
+
+### 12. **Reporting & Analytics**
+- Dashboard analytics
+- Role-based reports
+- Data visualization
+
+## 🔧 Development Guidelines
+
+### **Code Standards:**
+- **Laravel**: PSR-12 coding standards
+- **Vue.js**: Composition API dengan TypeScript (optional)
+- **Database**: Eloquent ORM dengan relationships
+- **API**: RESTful API design
+
+### **Testing:**
+- **Backend**: PHPUnit tests
+- **Frontend**: Vue Test Utils
+- **Integration**: API testing
+- **E2E**: Cypress atau Playwright
+
+### **Performance:**
+- **Caching**: Redis untuk caching
+- **Database**: Proper indexing
+- **Frontend**: Lazy loading dan code splitting
+- **API**: Pagination dan filtering
+
+## 📋 Development Standards & Conventions
+
+### **File Naming Conventions**
+
+#### Backend (Laravel)
+- **Controllers**: PascalCase (e.g., `UserController.php`, `SiswaController.php`)
+- **Models**: PascalCase (e.g., `User.php`, `Siswa.php`)
+- **Migrations**: snake_case with timestamp (e.g., `2024_01_15_000001_create_users_table.php`)
+- **Seeders**: PascalCase (e.g., `UserSeeder.php`, `SiswaSeeder.php`)
+- **Services**: PascalCase (e.g., `UserService.php`, `PresensiService.php`)
+- **Requests**: PascalCase (e.g., `CreateUserRequest.php`, `UpdateSiswaRequest.php`)
+- **Resources**: PascalCase (e.g., `UserResource.php`, `SiswaResource.php`)
+- **Middleware**: PascalCase (e.g., `RoleMiddleware.php`, `AuthMiddleware.php`)
+
+#### Frontend (Vue.js)
+- **Components**: PascalCase (e.g., `UserForm.vue`, `SiswaCard.vue`)
+- **Views**: PascalCase (e.g., `UsersView.vue`, `SiswaView.vue`)
+- **Stores**: camelCase (e.g., `userStore.js`, `siswaStore.js`)
+- **Services**: camelCase (e.g., `userService.js`, `presensiService.js`)
+- **Utils**: camelCase (e.g., `helpers.js`, `constants.js`)
+- **Assets**: kebab-case (e.g., `user-avatar.png`, `school-logo.svg`)
+
+#### Database
+- **Tables**: snake_case (e.g., `users`, `user_roles`, `kredit_poin`)
+- **Columns**: snake_case (e.g., `created_at`, `user_id`, `kredit_poin_id`)
+- **Indexes**: snake_case (e.g., `idx_users_email`, `idx_siswa_kelas_id`)
+
+#### Routes & URLs
+- **API Routes**: kebab-case (e.g., `/api/user-management`, `/api/kredit-poin`)
+- **Frontend Routes**: kebab-case (e.g., `/user-management`, `/kredit-poin`)
+- **Route Names**: kebab-case (e.g., `user-management`, `kredit-poin`)
+
+### **Database Migration Naming Conventions (Bahasa Indonesia)**
+
+#### Migration File Naming
+- **Format**: `YYYY_MM_DD_HHMMSS_create_[nama_tabel]_table.php`
+- **Contoh**: 
+  - `2024_01_15_000001_create_siswa_table.php`
+  - `2024_01_15_000002_create_presensi_table.php`
+  - `2024_01_15_000003_create_kredit_poin_table.php`
+  - `2024_01_15_000004_create_ekstrakurikuler_table.php`
+
+#### Migration Class Naming
+- **Format**: `Create[NamaTabel]Table`
+- **Contoh**:
+  - `CreateSiswaTable`
+  - `CreatePresensiTable`
+  - `CreateKreditPoinTable`
+  - `CreateEkstrakurikulerTable`
+
+#### Table Naming (snake_case - Bahasa Indonesia)
+- **Format**: `snake_case` dengan nama dalam bahasa Indonesia
+- **Contoh**:
+  - `siswa` (bukan `students`)
+  - `guru` (bukan `teachers`)
+  - `presensi` (bukan `attendance`)
+  - `kredit_poin` (bukan `credit_points`)
+  - `ekstrakurikuler` (bukan `extracurriculars`)
+  - `konseling` (bukan `counseling`)
+  - `orang_tua` (bukan `parents`)
+  - `tahun_ajaran` (bukan `academic_years`)
+  - `mata_pelajaran` (bukan `subjects`)
+
+#### Column Naming (snake_case - Bahasa Indonesia)
+- **Format**: `snake_case` dengan nama dalam bahasa Indonesia
+- **Contoh**:
+  - `nama_lengkap` (bukan `full_name`)
+  - `tanggal_lahir` (bukan `birth_date`)
+  - `jenis_kelamin` (bukan `gender`)
+  - `alamat_lengkap` (bukan `full_address`)
+  - `nomor_hp` (bukan `phone_number`)
+  - `status_aktif` (bukan `is_active`)
+  - `tanggal_masuk` (bukan `enrollment_date`)
+  - `wali_kelas_id` (bukan `homeroom_teacher_id`)
+
+### **Information, Validation & Notification Standards (Bahasa Indonesia)**
+
+#### Form Labels & Placeholders
+```javascript
+// ✅ Correct - Indonesian labels
+const formLabels = {
+  namaLengkap: 'Nama Lengkap',
+  namaPanggilan: 'Nama Panggilan',
+  jenisKelamin: 'Jenis Kelamin',
+  tempatLahir: 'Tempat Lahir',
+  tanggalLahir: 'Tanggal Lahir',
+  agama: 'Agama',
+  alamatLengkap: 'Alamat Lengkap',
+  nomorHp: 'Nomor HP',
+  email: 'Alamat Email',
+  kelas: 'Kelas',
+  tahunAjaran: 'Tahun Ajaran',
+  statusSiswa: 'Status Siswa'
+}
+
+// ✅ Correct - Indonesian placeholders
+const placeholders = {
+  namaLengkap: 'Masukkan nama lengkap',
+  nomorHp: 'Contoh: 081234567890',
+  email: 'contoh@email.com',
+  alamatLengkap: 'Masukkan alamat lengkap'
+}
+```
+
+#### Validation Messages
+```javascript
+// ✅ Correct - Indonesian validation messages
+const validationMessages = {
+  required: 'Field ini wajib diisi',
+  email: 'Format email tidak valid',
+  min: 'Minimal {min} karakter',
+  max: 'Maksimal {max} karakter',
+  numeric: 'Hanya boleh berisi angka',
+  unique: 'Data sudah ada',
+  confirmed: 'Konfirmasi tidak cocok',
+  date: 'Format tanggal tidak valid',
+  phone: 'Format nomor HP tidak valid',
+  nisn: 'NISN harus 10 digit',
+  nis: 'NIS harus 10 digit',
+  nik: 'NIK harus 16 digit'
+}
+```
+
+#### Success Messages
+```javascript
+// ✅ Correct - Indonesian success messages
+const successMessages = {
+  create: 'Data berhasil ditambahkan',
+  update: 'Data berhasil diperbarui',
+  delete: 'Data berhasil dihapus',
+  restore: 'Data berhasil dipulihkan',
+  import: 'Data berhasil diimpor',
+  export: 'Data berhasil diekspor',
+  login: 'Login berhasil',
+  logout: 'Logout berhasil',
+  passwordChange: 'Password berhasil diubah',
+  profileUpdate: 'Profil berhasil diperbarui'
+}
+```
+
+#### Error Messages
+```javascript
+// ✅ Correct - Indonesian error messages
+const errorMessages = {
+  general: 'Terjadi kesalahan. Silakan coba lagi.',
+  network: 'Koneksi internet bermasalah',
+  server: 'Server sedang bermasalah',
+  unauthorized: 'Anda tidak memiliki akses',
+  forbidden: 'Akses ditolak',
+  notFound: 'Data tidak ditemukan',
+  validation: 'Data yang dimasukkan tidak valid',
+  fileUpload: 'Gagal mengunggah file',
+  fileSize: 'Ukuran file terlalu besar',
+  fileType: 'Tipe file tidak didukung'
+}
+```
+
+#### Button & Action Labels
+```javascript
+// ✅ Correct - Indonesian button labels
+const buttonLabels = {
+  simpan: 'Simpan',
+  batal: 'Batal',
+  hapus: 'Hapus',
+  edit: 'Edit',
+  lihat: 'Lihat',
+  tambah: 'Tambah',
+  cari: 'Cari',
+  filter: 'Filter',
+  reset: 'Reset',
+  export: 'Ekspor',
+  import: 'Impor',
+  download: 'Unduh',
+  upload: 'Unggah',
+  konfirmasi: 'Konfirmasi',
+  ya: 'Ya',
+  tidak: 'Tidak',
+  tutup: 'Tutup',
+  kembali: 'Kembali',
+  lanjut: 'Lanjut',
+  selesai: 'Selesai'
+}
+```
+
+### **Language & Localization Standards**
+
+#### Primary Language
+- **Default**: Bahasa Indonesia
+- **UI Text**: Semua teks antarmuka dalam Bahasa Indonesia
+- **Comments**: Kode comments dalam Bahasa Indonesia
+- **Documentation**: Dokumentasi dalam Bahasa Indonesia
+- **Error Messages**: Pesan error dalam Bahasa Indonesia
+- **Validation Messages**: Pesan validasi dalam Bahasa Indonesia
+- **Notification Messages**: Pesan notifikasi dalam Bahasa Indonesia
+- **Success Messages**: Pesan sukses dalam Bahasa Indonesia
+
+#### Code Language (Tetap English)
+- **Variables**: English (e.g., `userData`, `isLoading`, `handleSubmit`)
+- **Functions**: English (e.g., `getUserData()`, `validateForm()`)
+- **API Endpoints**: English (e.g., `/api/users`, `/api/students`)
+- **Database Fields**: English (e.g., `created_at`, `updated_at`)
+- **Class Names**: English (e.g., `UserController`, `StudentService`)
+- **Method Names**: English (e.g., `getUserById()`, `createStudent()`)
 
 ## 🌿 **GIT STRATEGY**
 
@@ -88,7 +437,7 @@ git push origin core
 - **License Manager**: License validation and management
 
 ### **Jenjang-Specific Roles:**
-- **Kepala Sekolah**: School-level management
+- **Kepala Sekolah**: sekolah-level management
 - **Guru**: Teacher management and student oversight
 - **Siswa**: Student self-service
 - **Wali Kelas**: Class management
@@ -168,7 +517,7 @@ git push origin core
 ### **Database Naming Conventions**
 
 #### Tables
-- **Core Tables**: `users`, `roles`, `permissions`, `school_profile`
+- **Core Tables**: `users`, `roles`, `permissions`, `sekolah_profile`
 - **Jenjang Tables**: `siswa`, `guru`, `kelas`, `presensi`, `kredit_poin`
 - **Public Tables**: `postingan_umum`, `program`, `kegiatan_publik`
 
