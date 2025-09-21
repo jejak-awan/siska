@@ -2,8 +2,7 @@
 
 namespace App\Models\Core;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
 /**
  * Model untuk manajemen lisensi SISKA
@@ -12,9 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  * @author jejakawan.com
  * @supported K2NET - PT. Kirana Karina Network
  */
-class License extends Model
+class License extends BaseModel
 {
-    use HasFactory;
 
     protected $connection = 'core';
     protected $table = 'license_management';
