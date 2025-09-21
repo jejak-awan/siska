@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('core')->create('profil_sekolah', function (Blueprint $table) {
+        Schema::connection('backend')->create('profil_sekolah', function (Blueprint $table) {
             $table->id();
             $table->string('nama_sekolah')->comment('Nama sekolah');
             $table->enum('jenis_sekolah', ['negeri', 'swasta', 'yayasan'])->default('negeri')->comment('Jenis sekolah');
@@ -47,6 +47,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('core')->dropIfExists('profil_sekolah');
+        Schema::connection('backend')->dropIfExists('profil_sekolah');
     }
 };

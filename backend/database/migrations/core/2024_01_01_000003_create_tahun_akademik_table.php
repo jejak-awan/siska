@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('core')->create('tahun_akademik', function (Blueprint $table) {
+        Schema::connection('backend')->create('tahun_akademik', function (Blueprint $table) {
             $table->id();
             $table->foreignId('sekolah_id')->constrained('profil_sekolah')->onDelete('cascade')->comment('ID sekolah');
             $table->string('tahun_akademik')->comment('Tahun akademik (e.g., 2024/2025)');
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('core')->dropIfExists('tahun_akademik');
+        Schema::connection('backend')->dropIfExists('tahun_akademik');
     }
 };

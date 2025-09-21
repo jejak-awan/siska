@@ -24,7 +24,7 @@
 ### **A. STRUKTUR FOLDER UTAMA:**
 ```
 kesiswaan/
-├── core/                          # Shared core system
+├── backend/                          # Shared core system
 │   ├── app/
 │   │   ├── Console/
 │   │   ├── Events/
@@ -60,10 +60,10 @@ kesiswaan/
 │   │   └── database.php           # Database configuration
 │   ├── database/
 │   │   ├── migrations/
-│   │   │   ├── core/              # Core migrations
+│   │   │   ├── backend/              # Core migrations
 │   │   │   └── public/            # Public migrations
 │   │   └── seeders/
-│   │       ├── core/              # Core seeders
+│   │       ├── backend/              # Core seeders
 │   │       └── public/            # Public seeders
 │   └── routes/
 │       ├── api.php
@@ -366,7 +366,7 @@ kesiswaan/
 └── frontend/                      # Frontend application
     ├── src/
     │   ├── components/
-    │   │   ├── core/              # Core components
+    │   │   ├── backend/              # Core components
     │   │   │   ├── layout/
     │   │   │   ├── forms/
     │   │   │   └── ui/
@@ -379,7 +379,7 @@ kesiswaan/
     │   │       ├── wizard/
     │   │       └── steps/
     │   ├── views/
-    │   │   ├── core/              # Core views
+    │   │   ├── backend/              # Core views
     │   │   ├── jenjang/           # Jenjang-specific views
     │   │   │   ├── sd/
     │   │   │   ├── smp/
@@ -387,19 +387,19 @@ kesiswaan/
     │   │   │   └── smk/
     │   │   └── installer/         # Installer views
     │   ├── stores/
-    │   │   ├── core/              # Core stores
+    │   │   ├── backend/              # Core stores
     │   │   ├── jenjang/           # Jenjang-specific stores
     │   │   └── license/           # License stores
     │   ├── services/
-    │   │   ├── core/              # Core services
+    │   │   ├── backend/              # Core services
     │   │   ├── jenjang/           # Jenjang-specific services
     │   │   └── license/           # License services
     │   ├── composables/
-    │   │   ├── core/              # Core composables
+    │   │   ├── backend/              # Core composables
     │   │   ├── jenjang/           # Jenjang-specific composables
     │   │   └── license/           # License composables
     │   └── utils/
-    │       ├── core/              # Core utilities
+    │       ├── backend/              # Core utilities
     │       ├── jenjang/           # Jenjang-specific utilities
     │       └── license/           # License utilities
     ├── public/
@@ -417,7 +417,7 @@ kesiswaan/
 
 #### **Core Models:**
 ```php
-// core/app/Models/Core/BaseModel.php
+// backend/app/Models/Core/BaseModel.php
 <?php
 
 namespace App\Models\Core;
@@ -436,7 +436,7 @@ class BaseModel extends Model
     ];
 }
 
-// core/app/Models/Core/License.php
+// backend/app/Models/Core/License.php
 <?php
 
 namespace App\Models\Core;
@@ -483,7 +483,7 @@ class License extends BaseModel
     }
 }
 
-// core/app/Models/Core/sekolahProfile.php
+// backend/app/Models/Core/sekolahProfile.php
 <?php
 
 namespace App\Models\Core;
@@ -508,7 +508,7 @@ class sekolahProfile extends BaseModel
     }
 }
 
-// core/app/Models/Public/PostinganUmum.php
+// backend/app/Models/Public/PostinganUmum.php
 <?php
 
 namespace App\Models\Public;
@@ -569,7 +569,7 @@ class PostinganUmum extends Model
     }
 }
 
-// core/app/Models/Public/Program.php
+// backend/app/Models/Public/Program.php
 <?php
 
 namespace App\Models\Public;
@@ -650,7 +650,7 @@ class Program extends Model
 
 #### **Core Services:**
 ```php
-// core/app/Services/Core/LicenseService.php
+// backend/app/Services/Core/LicenseService.php
 <?php
 
 namespace App\Services\Core;
@@ -716,7 +716,7 @@ class LicenseService
     }
 }
 
-// core/app/Services/Public/PublicContentService.php
+// backend/app/Services/Public/PublicContentService.php
 <?php
 
 namespace App\Services\Public;

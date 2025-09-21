@@ -14,7 +14,7 @@ use App\Models\BaseModel;
 class License extends BaseModel
 {
 
-    protected $connection = 'core';
+    protected $connection = 'backend';
     protected $table = 'license_management';
 
     protected $fillable = [

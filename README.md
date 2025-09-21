@@ -73,7 +73,7 @@ test(scope): description    # Tests
 - **[Template Header](docs/template-header.md)** - Template untuk header dokumentasi
 
 ### **Dokumentasi Teknis:**
-- **[Core System](core/README.md)** - Dokumentasi core system
+- **[Core System](backend/README.md)** - Dokumentasi core system
 - **[SD Module](jenjang/sd/README.md)** - Dokumentasi modul SD
 - **[Public System](public/README.md)** - Dokumentasi sistem publik
 - **[Installer Wizard](installer/README.md)** - Dokumentasi installer
@@ -84,7 +84,7 @@ test(scope): description    # Tests
 
 ```
 siska/
-├── core/                       # Core system (shared)
+├── backend/                       # Core system (shared)
 │   ├── app/
 │   │   ├── Controllers/
 │   │   │   ├── Core/          # License, sekolah Profile, etc.
@@ -98,10 +98,10 @@ siska/
 │   ├── config/                # Core configuration
 │   ├── database/
 │   │   ├── migrations/
-│   │   │   ├── core/          # Core migrations
+│   │   │   ├── backend/          # Core migrations
 │   │   │   └── public/        # Public migrations
 │   │   └── seeders/
-│   │       ├── core/          # Core seeders
+│   │       ├── backend/          # Core seeders
 │   │       └── public/        # Public seeders
 │   └── routes/                # Core routes
 ├── jenjang/                   # Jenjang modules (isolated)
@@ -126,7 +126,7 @@ siska/
 └── frontend/                  # Frontend (all modules)
     ├── src/
     │   ├── components/
-    │   │   ├── core/
+    │   │   ├── backend/
     │   │   ├── jenjang/
     │   │   ├── public/
     │   │   └── installer/

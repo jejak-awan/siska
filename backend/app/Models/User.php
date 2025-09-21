@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
- * Model User untuk SISKA Core System
+ * Model User untuk SISKA Backend System
  * 
  * @package App\Models
  * @author jejakawan.com
@@ -18,7 +18,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $connection = 'core';
+    protected $connection = 'backend';
 
     /**
      * The attributes that are mass assignable.

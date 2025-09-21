@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('core')->create('semester', function (Blueprint $table) {
+        Schema::connection('backend')->create('semester', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tahun_akademik_id')->constrained('tahun_akademik')->onDelete('cascade')->comment('ID tahun akademik');
             $table->string('nama_semester')->comment('Nama semester (e.g., Ganjil, Genap)');
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('core')->dropIfExists('semester');
+        Schema::connection('backend')->dropIfExists('semester');
     }
 };

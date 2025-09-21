@@ -1,7 +1,7 @@
 {
-    "name": "siska/core",
+    "name": "siska/backend",
     "type": "project",
-    "description": "SISKA Core System - Sistem Informasi Sekolah Bidang Kesiswaan",
+    "description": "SISKA Backend System - Sistem Informasi Sekolah Bidang Kesiswaan",
     "keywords": ["laravel", "framework", "education", "siska", "kesiswaan"],
     "license": "MIT",
     "require": {

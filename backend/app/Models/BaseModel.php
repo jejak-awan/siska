@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Str;
 
 /**
- * Base Model untuk SISKA Core System
+ * Base Model untuk SISKA Backend System
  * 
  * @package App\Models
  * @author jejakawan.com
@@ -20,7 +20,7 @@ abstract class BaseModel extends Model
     /**
      * The connection name for the model.
      */
-    protected $connection = 'core';
+    protected $connection = 'backend';
 
     /**
      * The attributes that should be cast.

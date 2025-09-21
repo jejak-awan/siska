@@ -37,7 +37,7 @@ CREATE DATABASE siska_sma CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE DATABASE siska_smk CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- Database Core (Shared - License, sekolah Profile, etc.)
-CREATE DATABASE siska_core CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE siska_backend CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- Database Public (Shared - News, Programs, Gallery, etc.)
 CREATE DATABASE siska_public CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -588,7 +588,7 @@ CREATE INDEX idx_presensi_smk_hadir ON presensi_smk(id_siswa, tanggal) WHERE sta
 
 ### **A. TABEL UTAMA:**
 ```sql
-USE siska_core;
+USE siska_backend;
 
 -- Tabel License Management
 CREATE TABLE license_management (
@@ -859,7 +859,7 @@ CREATE INDEX idx_pengumuman_published ON pengumuman(tanggal_mulai) WHERE status 
         'driver' => 'mysql',
         'host' => env('DB_HOST', '127.0.0.1'),
         'port' => env('DB_PORT', '3306'),
-        'database' => env('DB_DATABASE_CORE', 'siska_core'),
+        'database' => env('DB_DATABASE_CORE', 'siska_backend'),
         'username' => env('DB_USERNAME', 'root'),
         'password' => env('DB_PASSWORD', ''),
         'charset' => 'utf8mb4',

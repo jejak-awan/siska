@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('core')->create('users', function (Blueprint $table) {
+        Schema::connection('backend')->create('users', function (Blueprint $table) {
             $table->id();
             $table->string('username')->unique()->comment('Username untuk login');
             $table->string('email')->unique()->comment('Alamat email');
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('core')->dropIfExists('users');
+        Schema::connection('backend')->dropIfExists('users');
     }
 };

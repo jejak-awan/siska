@@ -32,7 +32,7 @@
 ### **Workspace Structure:**
 ```
 /opt/kesiswaan/siska/
-├── core/                    # Core system (License, Profil Sekolah, etc.)
+├── backend/                    # Core system (License, Profil Sekolah, etc.)
 ├── jenjang/                 # Jenjang-specific modules
 │   ├── sd/                 # SD module
 │   ├── smp/                # SMP module
@@ -531,17 +531,17 @@ git push origin core
 ### **API Naming Conventions**
 
 #### Endpoints
-- **Core APIs**: `/api/core/{resource}`
+- **Core APIs**: `/api/backend/{resource}`
 - **Jenjang APIs**: `/api/{jenjang}/{resource}`
 - **Public APIs**: `/api/public/{resource}`
 
 #### Examples
 ```bash
 # Core APIs
-GET /api/core/users
-POST /api/core/users
-PUT /api/core/users/{id}
-DELETE /api/core/users/{id}
+GET /api/backend/users
+POST /api/backend/users
+PUT /api/backend/users/{id}
+DELETE /api/backend/users/{id}
 
 # Jenjang APIs
 GET /api/sd/siswa
@@ -603,7 +603,7 @@ cd ..
 - **[Installation Wizard](docs/strategi-wizard-installasi-isolated.md)**
 
 ### **Technical Documentation:**
-- **[Core System](core/README.md)**
+- **[Core System](backend/README.md)**
 - **[SD Module](jenjang/sd/README.md)**
 - **[Public System](public/README.md)**
 - **[Installer](installer/README.md)**

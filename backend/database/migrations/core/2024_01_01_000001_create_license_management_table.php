@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::connection('core')->create('license_management', function (Blueprint $table) {
+        Schema::connection('backend')->create('license_management', function (Blueprint $table) {
             $table->id();
             $table->string('license_key')->unique()->comment('Kunci lisensi unik');
             $table->string('installation_id')->nullable()->comment('ID instalasi');
@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::connection('core')->dropIfExists('license_management');
+        Schema::connection('backend')->dropIfExists('license_management');
     }
 };

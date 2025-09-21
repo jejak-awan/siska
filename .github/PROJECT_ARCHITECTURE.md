@@ -80,7 +80,7 @@ graph TB
 
 ```
 siska/
-├── core/                       # Core system (shared)
+├── backend/                       # Core system (shared)
 │   ├── app/
 │   │   ├── Controllers/
 │   │   │   ├── Core/          # License, sekolah Profile, etc.
@@ -94,10 +94,10 @@ siska/
 │   ├── config/                # Core configuration
 │   ├── database/
 │   │   ├── migrations/
-│   │   │   ├── core/          # Core migrations
+│   │   │   ├── backend/          # Core migrations
 │   │   │   └── public/        # Public migrations
 │   │   └── seeders/
-│   │       ├── core/          # Core seeders
+│   │       ├── backend/          # Core seeders
 │   │       └── public/        # Public seeders
 │   └── routes/                # Core routes
 ├── jenjang/                   # Jenjang modules (isolated)
@@ -130,7 +130,7 @@ siska/
 ├── frontend/                  # Frontend (all modules)
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── core/
+│   │   │   ├── backend/
 │   │   │   ├── jenjang/
 │   │   │   ├── public/
 │   │   │   └── installer/
@@ -376,7 +376,7 @@ graph TB
     end
     
     subgraph "Core APIs"
-        E[/api/core/*]
+        E[/api/backend/*]
         F[License APIs]
         G[sekolah Profile APIs]
         H[Academic APIs]
