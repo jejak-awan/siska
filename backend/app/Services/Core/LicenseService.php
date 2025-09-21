@@ -260,4 +260,159 @@ class LicenseService
             ];
         }
     }
+
+    /**
+     * Create license
+     */
+    public function createLicense(array $data)
+    {
+        try {
+            $license = License::create($data);
+
+            return [
+                'success' => true,
+                'message' => 'Lisensi berhasil dibuat',
+                'data' => $license
+            ];
+
+        } catch (\Exception $e) {
+            Log::error('Create license error: ' . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => 'Error membuat lisensi: ' . $e->getMessage()
+            ];
+        }
+    }
+
+    /**
+     * Update license by model
+     */
+    public function updateLicenseModel(License $license, array $data)
+    {
+        try {
+            $license->update($data);
+
+            // Clear cache
+            Cache::forget("license_info_{$license->license_key}");
+
+            return [
+                'success' => true,
+                'message' => 'Lisensi berhasil diperbarui',
+                'data' => $license
+            ];
+
+        } catch (\Exception $e) {
+            Log::error('Update license model error: ' . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => 'Error memperbarui lisensi: ' . $e->getMessage()
+            ];
+        }
+    }
+
+    /**
+     * Activate license by model
+     */
+    public function activateLicenseModel(License $license, int $sekolahId)
+    {
+        try {
+            $license->update([
+                'sekolah_id' => $sekolahId,
+                'is_active' => true,
+                'activated_at' => now(),
+                'last_check' => now(),
+            ]);
+
+            // Clear cache
+            Cache::forget("license_info_{$license->license_key}");
+
+            return [
+                'success' => true,
+                'message' => 'Lisensi berhasil diaktifkan',
+                'data' => $license
+            ];
+
+        } catch (\Exception $e) {
+            Log::error('Activate license model error: ' . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => 'Error mengaktifkan lisensi: ' . $e->getMessage()
+            ];
+        }
+    }
+
+    /**
+     * Deactivate license by model
+     */
+    public function deactivateLicenseModel(License $license)
+    {
+        try {
+            $license->update([
+                'is_active' => false,
+                'last_check' => now(),
+            ]);
+
+            // Clear cache
+            Cache::forget("license_info_{$license->license_key}");
+
+            return [
+                'success' => true,
+                'message' => 'Lisensi berhasil dinonaktifkan',
+                'data' => $license
+            ];
+
+        } catch (\Exception $e) {
+            Log::error('Deactivate license model error: ' . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => 'Error menonaktifkan lisensi: ' . $e->getMessage()
+            ];
+        }
+    }
+
+    /**
+     * Check license status
+     */
+    public function checkLicenseStatus(License $license)
+    {
+        try {
+            $isValid = $license->isValid();
+            $isExpired = $license->expires_at < now();
+            $isActive = $license->is_active;
+
+            $status = 'invalid';
+            if ($isValid) {
+                $status = 'valid';
+            } elseif ($isExpired) {
+                $status = 'expired';
+            } elseif (!$isActive) {
+                $status = 'inactive';
+            }
+
+            return [
+                'success' => true,
+                'message' => 'Status lisensi berhasil dicek',
+                'data' => [
+                    'status' => $status,
+                    'is_valid' => $isValid,
+                    'is_active' => $isActive,
+                    'is_expired' => $isExpired,
+                    'expires_at' => $license->expires_at,
+                    'activated_at' => $license->activated_at,
+                    'last_check' => $license->last_check,
+                    'license_type' => $license->license_type,
+                    'max_users' => $license->max_users,
+                    'jenjang_access' => $license->jenjang_access,
+                    'features' => $license->features,
+                ]
+            ];
+
+        } catch (\Exception $e) {
+            Log::error('Check license status error: ' . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => 'Error mengecek status lisensi: ' . $e->getMessage()
+            ];
+        }
+    }
 }

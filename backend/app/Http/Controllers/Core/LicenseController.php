@@ -94,7 +94,16 @@ class LicenseController extends Controller
             ], 422);
         }
 
-        $license = $this->licenseService->createLicense($request->all());
+        $result = $this->licenseService->createLicense($request->all());
+        
+        if (!$result['success']) {
+            return response()->json([
+                'success' => false,
+                'message' => $result['message']
+            ], 422);
+        }
+        
+        $license = $result['data'];
 
         return response()->json([
             'success' => true,
@@ -133,7 +142,16 @@ class LicenseController extends Controller
             ], 422);
         }
 
-        $license = $this->licenseService->updateLicense($license, $request->all());
+        $result = $this->licenseService->updateLicenseModel($license, $request->all());
+        
+        if (!$result['success']) {
+            return response()->json([
+                'success' => false,
+                'message' => $result['message']
+            ], 422);
+        }
+        
+        $license = $result['data'];
 
         return response()->json([
             'success' => true,
@@ -175,7 +193,16 @@ class LicenseController extends Controller
             ], 422);
         }
 
-        $license = $this->licenseService->activateLicense($license, $request->sekolah_id);
+        $result = $this->licenseService->activateLicenseModel($license, $request->sekolah_id);
+        
+        if (!$result['success']) {
+            return response()->json([
+                'success' => false,
+                'message' => $result['message']
+            ], 422);
+        }
+        
+        $license = $result['data'];
 
         return response()->json([
             'success' => true,
@@ -189,7 +216,16 @@ class LicenseController extends Controller
      */
     public function deactivate(License $license): JsonResponse
     {
-        $license = $this->licenseService->deactivateLicense($license);
+        $result = $this->licenseService->deactivateLicenseModel($license);
+        
+        if (!$result['success']) {
+            return response()->json([
+                'success' => false,
+                'message' => $result['message']
+            ], 422);
+        }
+        
+        $license = $result['data'];
 
         return response()->json([
             'success' => true,
@@ -203,7 +239,16 @@ class LicenseController extends Controller
      */
     public function check(License $license): JsonResponse
     {
-        $status = $this->licenseService->checkLicenseStatus($license);
+        $result = $this->licenseService->checkLicenseStatus($license);
+        
+        if (!$result['success']) {
+            return response()->json([
+                'success' => false,
+                'message' => $result['message']
+            ], 422);
+        }
+        
+        $status = $result['data'];
 
         return response()->json([
             'success' => true,
