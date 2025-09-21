@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('model_type')->comment('Tipe model yang diaudit (e.g., App\\Models\\Public\\PostinganUmum)');
             $table->unsignedBigInteger('model_id')->comment('ID model yang diaudit');
             $table->string('event')->comment('Jenis event: created, updated, deleted, reviewed, published');
-            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null')->comment('User yang melakukan audit');
+            $table->unsignedBigInteger('user_id')->nullable()->comment('ID User yang melakukan audit (reference ke backend.users)');
             $table->text('old_values')->nullable()->comment('Nilai lama (JSON)');
             $table->text('new_values')->nullable()->comment('Nilai baru (JSON)');
             $table->text('catatan')->nullable()->comment('Catatan audit');
