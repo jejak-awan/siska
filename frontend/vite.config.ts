@@ -14,14 +14,15 @@ export default defineConfig({
       '@services': resolve(__dirname, 'src/services'),
       '@utils': resolve(__dirname, 'src/utils'),
       '@assets': resolve(__dirname, 'src/assets'),
+      '@types': resolve(__dirname, 'src/types'),
     },
   },
   server: {
+    host: '0.0.0.0',
     port: 3000,
-    host: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        target: 'http://localhost:8001',
         changeOrigin: true,
         secure: false,
       },
@@ -34,18 +35,13 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ['vue', 'vue-router', 'pinia'],
-          ui: ['@headlessui/vue', '@heroicons/vue'],
+          ui: ['@headlessui/vue', '@heroicons/vue', 'lucide-vue-next'],
           charts: ['chart.js', 'vue-chartjs'],
         },
       },
     },
   },
-  css: {
-    postcss: {
-      plugins: [
-        require('tailwindcss'),
-        require('autoprefixer'),
-      ],
-    },
+  optimizeDeps: {
+    include: ['vue', 'vue-router', 'pinia', 'axios'],
   },
 })
