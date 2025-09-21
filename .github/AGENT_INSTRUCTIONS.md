@@ -391,6 +391,167 @@ const buttonLabels = {
 - **Class Names**: English (e.g., `UserController`, `StudentService`)
 - **Method Names**: English (e.g., `getUserById()`, `createStudent()`)
 
+## 📁 **FILE & FOLDER ORGANIZATION STRATEGY**
+
+### **Pre-Creation Checklist**
+
+#### 1. **File/Folder Placement Verification**
+```bash
+# SEBELUM membuat file/folder baru, WAJIB cek:
+# 1. Apakah file/folder sudah ada?
+ls -la /path/to/target/directory
+
+# 2. Apakah ada duplikasi nama?
+find /opt/kesiswaan/siska -name "*filename*" -type f
+find /opt/kesiswaan/siska -name "*foldername*" -type d
+
+# 3. Apakah struktur sudah sesuai konvensi?
+# - Core functions → backend/app/Models/Core/
+# - Public functions → backend/app/Models/Public/
+# - Core migrations → backend/database/migrations/core/
+# - Public migrations → backend/database/migrations/public/
+```
+
+#### 2. **Naming Convention Verification**
+```bash
+# WAJIB cek sebelum membuat:
+# - File names: PascalCase untuk PHP classes, kebab-case untuk Vue components
+# - Folder names: snake_case untuk database, kebab-case untuk frontend
+# - Table names: snake_case dengan Bahasa Indonesia
+# - Column names: snake_case dengan Bahasa Indonesia
+```
+
+#### 3. **Function Classification**
+```bash
+# SEBELUM membuat file, tentukan dulu:
+# - Apakah ini Core System? → Masuk ke Core/
+# - Apakah ini Public System? → Masuk ke Public/
+# - Apakah ini Jenjang-specific? → Masuk ke jenjang/[jenjang]/
+# - Apakah ini Shared? → Masuk ke shared/
+```
+
+### **File Creation Protocol**
+
+#### 1. **Model Creation**
+```bash
+# WAJIB cek dulu:
+# 1. Apakah model sudah ada?
+find /opt/kesiswaan/siska -name "*ModelName*" -type f
+
+# 2. Apakah table sudah ada di database?
+# 3. Apakah migration sudah ada?
+# 4. Apakah seeder sudah ada?
+
+# Lalu buat dengan urutan:
+# 1. Migration (jika belum ada)
+# 2. Model
+# 3. Seeder (jika diperlukan)
+# 4. Service (jika diperlukan)
+```
+
+#### 2. **Migration Creation**
+```bash
+# WAJIB cek dulu:
+# 1. Apakah table sudah ada?
+# 2. Apakah migration sudah ada?
+# 3. Apakah masuk Core atau Public?
+
+# Lalu buat di folder yang benar:
+# - Core functions → backend/database/migrations/core/
+# - Public functions → backend/database/migrations/public/
+```
+
+#### 3. **Controller Creation**
+```bash
+# WAJIB cek dulu:
+# 1. Apakah controller sudah ada?
+# 2. Apakah route sudah ada?
+# 3. Apakah middleware sudah ada?
+
+# Lalu buat dengan urutan:
+# 1. Controller
+# 2. Route
+# 3. Middleware (jika diperlukan)
+```
+
+### **Duplication Prevention Strategy**
+
+#### 1. **Search Before Create**
+```bash
+# SEBELUM membuat file apapun, WAJIB cari dulu:
+# - Nama file yang sama
+# - Nama class yang sama
+# - Nama function yang sama
+# - Nama table yang sama
+# - Nama column yang sama
+```
+
+#### 2. **Consistent Naming**
+```bash
+# GUNAKAN naming yang konsisten:
+# - Model: PascalCase (User.php, ProfilSekolah.php)
+# - Migration: snake_case (create_users_table.php)
+# - Table: snake_case (users, profil_sekolah)
+# - Column: snake_case (nama_lengkap, tanggal_lahir)
+```
+
+#### 3. **Folder Structure Validation**
+```bash
+# SEBELUM membuat folder, WAJIB cek:
+# - Apakah folder sudah ada?
+# - Apakah struktur sudah sesuai?
+# - Apakah naming sudah konsisten?
+```
+
+### **Post-Creation Verification**
+
+#### 1. **File Structure Check**
+```bash
+# SETELAH membuat file, WAJIB cek:
+# 1. Apakah file bisa diakses?
+# 2. Apakah syntax benar?
+# 3. Apakah import/use statements benar?
+# 4. Apakah namespace benar?
+```
+
+#### 2. **Database Structure Check**
+```bash
+# SETELAH membuat migration, WAJIB cek:
+# 1. Apakah migration bisa dijalankan?
+# 2. Apakah table structure benar?
+# 3. Apakah index sudah ada?
+# 4. Apakah foreign key sudah ada?
+```
+
+#### 3. **Integration Check**
+```bash
+# SETELAH membuat file, WAJIB cek:
+# 1. Apakah file terintegrasi dengan sistem?
+# 2. Apakah tidak ada conflict?
+# 3. Apakah tidak ada duplikasi?
+# 4. Apakah naming konsisten?
+```
+
+### **Common Mistakes to Avoid**
+
+#### 1. **File Placement Mistakes**
+- ❌ Jangan taruh Core models di Public folder
+- ❌ Jangan taruh Public models di Core folder
+- ❌ Jangan taruh migrations di root folder
+- ❌ Jangan taruh controllers di models folder
+
+#### 2. **Naming Mistakes**
+- ❌ Jangan gunakan English untuk table names
+- ❌ Jangan gunakan Indonesian untuk class names
+- ❌ Jangan gunakan inconsistent naming
+- ❌ Jangan gunakan special characters
+
+#### 3. **Structure Mistakes**
+- ❌ Jangan buat folder tanpa purpose
+- ❌ Jangan buat file tanpa function
+- ❌ Jangan buat duplicate files
+- ❌ Jangan buat inconsistent structure
+
 ## 🌿 **GIT STRATEGY**
 
 ### **Repository Information:**
