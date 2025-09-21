@@ -72,7 +72,7 @@ kesiswaan/
 
 ### **A. FLOW WIZARD YANG DIREVISI:**
 
-#### **Step 1: License & School Information**
+#### **Step 1: License & sekolah Information**
 ```vue
 <template>
     <div class="wizard-step">
@@ -102,15 +102,15 @@ kesiswaan/
             </div>
         </div>
         
-        <!-- School Information -->
-        <div class="school-section">
+        <!-- sekolah Information -->
+        <div class="sekolah-section">
             <h3>Informasi Sekolah</h3>
-            <form @submit.prevent="validateSchoolInfo">
+            <form @submit.prevent="validatesekolahInfo">
                 <div class="form-group">
                     <label>Nama Sekolah *</label>
                     <input 
                         type="text" 
-                        v-model="school.nama_sekolah"
+                        v-model="sekolah.nama_sekolah"
                         :class="{ 'error': errors.nama_sekolah }"
                         required
                     >
@@ -121,7 +121,7 @@ kesiswaan/
                 
                 <div class="form-group">
                     <label>Jenis Sekolah *</label>
-                    <select v-model="school.jenis_sekolah" required>
+                    <select v-model="sekolah.jenis_sekolah" required>
                         <option value="">Pilih Jenis Sekolah</option>
                         <option value="negeri">Sekolah Negeri</option>
                         <option value="swasta">Sekolah Swasta</option>
@@ -132,7 +132,7 @@ kesiswaan/
                 <div class="form-group">
                     <label>Alamat Lengkap *</label>
                     <textarea 
-                        v-model="school.alamat"
+                        v-model="sekolah.alamat"
                         :class="{ 'error': errors.alamat }"
                         required
                     ></textarea>
@@ -146,7 +146,7 @@ kesiswaan/
                         <label>Telepon *</label>
                         <input 
                             type="tel" 
-                            v-model="school.telepon"
+                            v-model="sekolah.telepon"
                             :class="{ 'error': errors.telepon }"
                             required
                         >
@@ -159,7 +159,7 @@ kesiswaan/
                         <label>Email *</label>
                         <input 
                             type="email" 
-                            v-model="school.email"
+                            v-model="sekolah.email"
                             :class="{ 'error': errors.email }"
                             required
                         >
@@ -197,7 +197,7 @@ const license = ref({
     expiry_date: null
 })
 
-const school = ref({
+const sekolah = ref({
     nama_sekolah: '',
     jenis_sekolah: '',
     alamat: '',
@@ -207,42 +207,42 @@ const school = ref({
 
 const isStepValid = computed(() => {
     return license.value.type && 
-           school.value.nama_sekolah && 
-           school.value.jenis_sekolah && 
-           school.value.alamat && 
-           school.value.telepon && 
-           school.value.email &&
+           sekolah.value.nama_sekolah && 
+           sekolah.value.jenis_sekolah && 
+           sekolah.value.alamat && 
+           sekolah.value.telepon && 
+           sekolah.value.email &&
            Object.keys(errors.value).length === 0
 })
 
-const validateSchoolInfo = async () => {
+const validatesekolahInfo = async () => {
     clearErrors()
     
     // Validate nama sekolah
-    if (!school.value.nama_sekolah.trim()) {
+    if (!sekolah.value.nama_sekolah.trim()) {
         errors.value.nama_sekolah = 'Nama sekolah wajib diisi'
-    } else if (school.value.nama_sekolah.length < 3) {
+    } else if (sekolah.value.nama_sekolah.length < 3) {
         errors.value.nama_sekolah = 'Nama sekolah minimal 3 karakter'
     }
     
     // Validate alamat
-    if (!school.value.alamat.trim()) {
+    if (!sekolah.value.alamat.trim()) {
         errors.value.alamat = 'Alamat wajib diisi'
-    } else if (school.value.alamat.length < 10) {
+    } else if (sekolah.value.alamat.length < 10) {
         errors.value.alamat = 'Alamat minimal 10 karakter'
     }
     
     // Validate telepon
-    if (!school.value.telepon.trim()) {
+    if (!sekolah.value.telepon.trim()) {
         errors.value.telepon = 'Telepon wajib diisi'
-    } else if (!/^[0-9+\-\s()]+$/.test(school.value.telepon)) {
+    } else if (!/^[0-9+\-\s()]+$/.test(sekolah.value.telepon)) {
         errors.value.telepon = 'Format telepon tidak valid'
     }
     
     // Validate email
-    if (!school.value.email.trim()) {
+    if (!sekolah.value.email.trim()) {
         errors.value.email = 'Email wajib diisi'
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(school.value.email)) {
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(sekolah.value.email)) {
         errors.value.email = 'Format email tidak valid'
     }
 }
@@ -251,7 +251,7 @@ const nextStep = () => {
     if (isStepValid.value) {
         emit('update:modelValue', {
             license: license.value,
-            school: school.value
+            sekolah: sekolah.value
         })
         emit('next')
     }
@@ -262,8 +262,8 @@ const prevStep = () => {
 }
 
 // Watch for changes to validate in real-time
-watch([school, license], () => {
-    validateSchoolInfo()
+watch([sekolah, license], () => {
+    validatesekolahInfo()
 }, { deep: true })
 </script>
 ```

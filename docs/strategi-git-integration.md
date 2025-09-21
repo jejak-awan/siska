@@ -44,7 +44,7 @@ main                    # Production-ready code (all modules)
 develop                 # Development integration branch
 
 # Module branches
-core                    # Core system (License, School Profile, etc.)
+core                    # Core system (License, sekolah Profile, etc.)
 sd                      # SD module development
 smp                     # SMP module development
 sma                     # SMA module development
@@ -714,7 +714,7 @@ git checkout -b feature/migrate-from-legacy
 # Migrate core models
 echo "Migrating core models..."
 cp -r "$LEGACY_DIR/app/Models/User.php" "$ISOLATED_DIR/core/app/Models/Core/"
-cp -r "$LEGACY_DIR/app/Models/School.php" "$ISOLATED_DIR/core/app/Models/Core/"
+cp -r "$LEGACY_DIR/app/Models/sekolah.php" "$ISOLATED_DIR/core/app/Models/Core/"
 
 # Migrate public models
 echo "Migrating public models..."

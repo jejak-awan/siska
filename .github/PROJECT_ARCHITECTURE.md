@@ -29,7 +29,7 @@ graph TB
     subgraph "Core System"
         A[siska_core]
         A1[license_management]
-        A2[school_profile]
+        A2[sekolah_profile]
         A3[tahun_akademik]
         A4[semester]
     end
@@ -60,7 +60,7 @@ graph TB
 
 #### **Core Database (`siska_core`)**
 - **Purpose**: Shared system configuration
-- **Tables**: License management, school profile, academic years, semesters
+- **Tables**: License management, sekolah profile, academic years, semesters
 - **Access**: All jenjang modules
 
 #### **Jenjang Databases**
@@ -83,7 +83,7 @@ siska/
 ├── core/                       # Core system (shared)
 │   ├── app/
 │   │   ├── Controllers/
-│   │   │   ├── Core/          # License, School Profile, etc.
+│   │   │   ├── Core/          # License, sekolah Profile, etc.
 │   │   │   └── Public/        # Public content management
 │   │   ├── Models/
 │   │   │   ├── Core/          # Core models
@@ -155,7 +155,7 @@ siska/
 graph LR
     subgraph "Core System"
         A[License Service]
-        B[School Profile]
+        B[sekolah Profile]
         C[Academic Year]
         D[Semester]
     end
@@ -378,7 +378,7 @@ graph TB
     subgraph "Core APIs"
         E[/api/core/*]
         F[License APIs]
-        G[School Profile APIs]
+        G[sekolah Profile APIs]
         H[Academic APIs]
     end
     

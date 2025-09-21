@@ -87,7 +87,7 @@ siska/
 ├── core/                       # Core system (shared)
 │   ├── app/
 │   │   ├── Controllers/
-│   │   │   ├── Core/          # License, School Profile, etc.
+│   │   │   ├── Core/          # License, sekolah Profile, etc.
 │   │   │   └── Public/        # Public content management
 │   │   ├── Models/
 │   │   │   ├── Core/          # Core models
@@ -196,7 +196,7 @@ npm run dev
 - `siska_smk` - SMK database (isolated)
 
 ### Shared Databases:
-- `siska_core` - Core database (license, school profile, etc.)
+- `siska_core` - Core database (license, sekolah profile, etc.)
 - `siska_public` - Public database (news, programs, gallery, etc.)
 
 ## 🔄 **GIT STRATEGY**

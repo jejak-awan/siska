@@ -36,7 +36,7 @@ CREATE DATABASE siska_sma CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 -- Database SMK (Isolated)
 CREATE DATABASE siska_smk CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- Database Core (Shared - License, School Profile, etc.)
+-- Database Core (Shared - License, sekolah Profile, etc.)
 CREATE DATABASE siska_core CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- Database Public (Shared - News, Programs, Gallery, etc.)
@@ -602,8 +602,8 @@ CREATE TABLE license_management (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Tabel School Profile
-CREATE TABLE school_profile (
+-- Tabel sekolah Profile
+CREATE TABLE sekolah_profile (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     nama_sekolah VARCHAR(255) NOT NULL,
     jenis_sekolah ENUM('negeri', 'swasta', 'yayasan') NOT NULL,
@@ -647,7 +647,7 @@ CREATE TABLE semester (
 -- Indexes untuk performa optimal
 CREATE INDEX idx_license_management_status ON license_management(status);
 CREATE INDEX idx_license_management_type ON license_management(license_type);
-CREATE INDEX idx_school_profile_status ON school_profile(status);
+CREATE INDEX idx_sekolah_profile_status ON sekolah_profile(status);
 CREATE INDEX idx_tahun_akademik_status ON tahun_akademik(status);
 CREATE INDEX idx_semester_tahun_akademik ON semester(id_tahun_akademik);
 

@@ -483,14 +483,14 @@ class License extends BaseModel
     }
 }
 
-// core/app/Models/Core/SchoolProfile.php
+// core/app/Models/Core/sekolahProfile.php
 <?php
 
 namespace App\Models\Core;
 
-class SchoolProfile extends BaseModel
+class sekolahProfile extends BaseModel
 {
-    protected $table = 'school_profile';
+    protected $table = 'sekolah_profile';
     
     protected $fillable = [
         'nama_sekolah',

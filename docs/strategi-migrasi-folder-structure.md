@@ -460,7 +460,7 @@ echo "Starting code migration..."
 # Migrate core models
 echo "Migrating core models..."
 cp -r "$BACKEND_DIR/app/Models/User.php" "$SISKA_DIR/core/app/Models/Core/"
-cp -r "$BACKEND_DIR/app/Models/School.php" "$SISKA_DIR/core/app/Models/Core/"
+cp -r "$BACKEND_DIR/app/Models/sekolah.php" "$SISKA_DIR/core/app/Models/Core/"
 
 # Migrate public models
 echo "Migrating public models..."

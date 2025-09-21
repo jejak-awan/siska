@@ -106,7 +106,7 @@ gantt
 - **Progress**: 25%
 - **Deliverables**:
   - [x] License Model
-  - [x] School Profile Model
+  - [x] sekolah Profile Model
   - [x] Tahun Akademik Model
   - [x] Semester Model
   - [ ] User Model
@@ -118,7 +118,7 @@ gantt
 - **Progress**: 0%
 - **Deliverables**:
   - [ ] License Service
-  - [ ] School Profile Service
+  - [ ] sekolah Profile Service
   - [ ] Academic Year Service
   - [ ] Semester Service
   - [ ] User Service
@@ -130,7 +130,7 @@ gantt
 - **Progress**: 0%
 - **Deliverables**:
   - [ ] License Controller
-  - [ ] School Profile Controller
+  - [ ] sekolah Profile Controller
   - [ ] Academic Year Controller
   - [ ] Semester Controller
   - [ ] User Controller
@@ -142,7 +142,7 @@ gantt
 - **Progress**: 0%
 - **Deliverables**:
   - [ ] License API Endpoints
-  - [ ] School Profile API Endpoints
+  - [ ] sekolah Profile API Endpoints
   - [ ] Academic Year API Endpoints
   - [ ] Semester API Endpoints
   - [ ] User API Endpoints
@@ -299,7 +299,7 @@ gantt
 | Component | Status | Progress | Notes |
 |-----------|--------|----------|-------|
 | License Model | ✅ Complete | 100% | Basic model created |
-| School Profile Model | ✅ Complete | 100% | Basic model created |
+| sekolah Profile Model | ✅ Complete | 100% | Basic model created |
 | Tahun Akademik Model | ✅ Complete | 100% | Basic model created |
 | Semester Model | ✅ Complete | 100% | Basic model created |
 | User Model | ⏳ Planned | 0% | To be implemented |

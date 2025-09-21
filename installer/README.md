@@ -33,7 +33,7 @@ installer/
 ├── resources/
 │   ├── views/
 │   │   ├── wizard/
-│   │   │   ├── step1-school-info.blade.php
+│   │   │   ├── step1-sekolah-info.blade.php
 │   │   │   ├── step2-jenjang-selection.blade.php
 │   │   │   ├── step3-module-config.blade.php
 │   │   │   ├── step4-database-config.blade.php
@@ -159,7 +159,7 @@ http://localhost:8000/installer
 ```php
 // Proses instalasi:
 1. Create database schema
-2. Create school profile
+2. Create sekolah profile
 3. Create jenjang configuration
 4. Create module configuration
 5. Create default data
@@ -241,10 +241,10 @@ public function validateLicense($licenseKey)
 ### **License Activation**
 ```php
 // Aktivasi lisensi setelah instalasi
-public function activateLicense($licenseKey, $installationId, $schoolData)
+public function activateLicense($licenseKey, $installationId, $sekolahData)
 {
     $licenseService = new LicenseService();
-    return $licenseService->activateLicense($licenseKey, $installationId, $schoolData);
+    return $licenseService->activateLicense($licenseKey, $installationId, $sekolahData);
 }
 ```
 
@@ -258,7 +258,7 @@ public function activateLicense($licenseKey, $installationId, $schoolData)
 [2024-01-01 10:00:03] Core database created
 [2024-01-01 10:00:04] SD database created
 [2024-01-01 10:00:05] Migrations executed
-[2024-01-01 10:00:06] School profile created
+[2024-01-01 10:00:06] sekolah profile created
 [2024-01-01 10:00:07] Admin user created
 [2024-01-01 10:00:08] Installation completed successfully
 ```

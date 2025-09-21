@@ -20,7 +20,7 @@ frontend/
 │   ├── components/
 │   │   ├── core/              # Core components
 │   │   │   ├── LicenseManager.vue
-│   │   │   ├── SchoolProfile.vue
+│   │   │   ├── sekolahProfile.vue
 │   │   │   └── YearAcademic.vue
 │   │   ├── jenjang/           # Jenjang components
 │   │   │   ├── sd/            # SD components
@@ -33,7 +33,7 @@ frontend/
 │   │   │   └── GalleryView.vue
 │   │   ├── installer/         # Installer components
 │   │   │   ├── WizardStep.vue
-│   │   │   ├── SchoolInfo.vue
+│   │   │   ├── sekolahInfo.vue
 │   │   │   └── JenjangSelection.vue
 │   │   └── shared/            # Shared components
 │   │       ├── Layout/
@@ -379,11 +379,11 @@ export class LicenseService {
     return axios.post(`${this.baseURL}/licenses/validate`, { license_key: licenseKey })
   }
 
-  static async activate(licenseKey: string, installationId: string, schoolData: any) {
+  static async activate(licenseKey: string, installationId: string, sekolahData: any) {
     return axios.post(`${this.baseURL}/licenses/activate`, {
       license_key: licenseKey,
       installation_id: installationId,
-      school_data: schoolData
+      sekolah_data: sekolahData
     })
   }
 }
@@ -420,9 +420,9 @@ const router = createRouter({
           component: () => import('@/views/core/License.vue')
         },
         {
-          path: 'school-profile',
-          name: 'SchoolProfile',
-          component: () => import('@/views/core/SchoolProfile.vue')
+          path: 'sekolah-profile',
+          name: 'sekolahProfile',
+          component: () => import('@/views/core/sekolahProfile.vue')
         }
       ]
     },
