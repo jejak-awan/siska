@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Core\LicenseController;
+use App\Http\Controllers\Core\ProfilSekolahController;
+use App\Http\Controllers\Core\TahunAkademikController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,4 +45,21 @@ Route::middleware('auth:sanctum')->group(function () {
             ]
         ]);
     });
+
+    // License management routes
+    Route::apiResource('licenses', LicenseController::class);
+    Route::post('licenses/{license}/activate', [LicenseController::class, 'activate']);
+    Route::post('licenses/{license}/deactivate', [LicenseController::class, 'deactivate']);
+    Route::get('licenses/{license}/check', [LicenseController::class, 'check']);
+
+    // School profile routes
+    Route::apiResource('profil-sekolah', ProfilSekolahController::class);
+    Route::get('profil-sekolah/npsn/{npsn}', [ProfilSekolahController::class, 'getByNpsn']);
+    Route::get('profil-sekolah/jenjang/{jenjang}', [ProfilSekolahController::class, 'getByJenjang']);
+
+    // Academic year routes
+    Route::apiResource('tahun-akademik', TahunAkademikController::class);
+    Route::post('tahun-akademik/{tahunAkademik}/activate', [TahunAkademikController::class, 'activate']);
+    Route::get('tahun-akademik/active', [TahunAkademikController::class, 'getActive']);
+    Route::get('tahun-akademik/sekolah/{sekolah}', [TahunAkademikController::class, 'getBySchool']);
 });

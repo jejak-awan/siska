@@ -16,7 +16,7 @@ class ProfilSekolah extends Model
 {
     use HasFactory;
 
-    protected $connection = 'core';
+    protected $connection = 'backend';
     protected $table = 'profil_sekolah';
 
     protected $fillable = [
