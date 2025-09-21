@@ -12,6 +12,53 @@
 
 Workspace ini adalah implementasi dari **Isolated Architecture** untuk sistem SISKA. Setiap jenjang pendidikan (SD, SMP, SMA, SMK) memiliki modul terpisah dengan database isolated, namun tetap menggunakan core system yang shared.
 
+## 🌿 **GIT STRATEGY**
+
+### **Repository Information:**
+- **Main Repository**: [https://github.com/jejak-awan/siska](https://github.com/jejak-awan/siska)
+- **Legacy Repository**: [https://github.com/jejak-awan/siska-legacy](https://github.com/jejak-awan/siska-legacy)
+- **SSH Host**: `github-siska`
+
+### **Branch Strategy:**
+```bash
+main                    # Production-ready (all modules)
+develop                 # Development integration
+core                    # Core system development
+sd                      # SD module development
+smp                     # SMP module development
+sma                     # SMA module development
+smk                     # SMK module development
+public                  # Public system development
+installer               # Installer wizard development
+shared                  # Shared components development
+```
+
+### **Development Workflow:**
+```bash
+# 1. Switch to module branch
+git checkout sd
+
+# 2. Develop features
+git add .
+git commit -m "feat(sd): add presensi system"
+
+# 3. Push to remote
+git push origin sd
+
+# 4. Create Pull Request
+# 5. Merge to develop
+# 6. Deploy to main
+```
+
+### **Commit Convention:**
+```bash
+feat(scope): description    # New feature
+fix(scope): description     # Bug fix
+docs(scope): description    # Documentation
+refactor(scope): description # Code refactoring
+test(scope): description    # Tests
+```
+
 ## 🏗️ **STRUKTUR WORKSPACE**
 
 ```
