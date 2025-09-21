@@ -18,39 +18,29 @@
 
       <!-- Login Form -->
       <form class="mt-8 space-y-6" @submit.prevent="handleLogin">
-        <div class="rounded-md shadow-sm -space-y-px">
-          <!-- Username Field -->
-          <div>
-            <label for="username" class="sr-only">Username</label>
-            <input
-              id="username"
-              v-model="form.username"
-              name="username"
-              type="text"
-              autocomplete="username"
-              required
-              class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
-              placeholder="Username atau Email"
-              :disabled="isLoading"
-            />
-          </div>
+        <!-- Username Field -->
+        <BaseInput
+          v-model="form.username"
+          type="text"
+          label="Username atau Email"
+          placeholder="Masukkan username atau email"
+          :error="errors.username"
+          :disabled="isLoading"
+          required
+          autocomplete="username"
+        />
 
-          <!-- Password Field -->
-          <div>
-            <label for="password" class="sr-only">Password</label>
-            <input
-              id="password"
-              v-model="form.password"
-              name="password"
-              type="password"
-              autocomplete="current-password"
-              required
-              class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 focus:z-10 sm:text-sm"
-              placeholder="Password"
-              :disabled="isLoading"
-            />
-          </div>
-        </div>
+        <!-- Password Field -->
+        <BaseInput
+          v-model="form.password"
+          type="password"
+          label="Password"
+          placeholder="Masukkan password"
+          :error="errors.password"
+          :disabled="isLoading"
+          required
+          autocomplete="current-password"
+        />
 
         <!-- Error Message -->
         <div v-if="errorMessage" class="alert alert-danger">
@@ -58,23 +48,16 @@
         </div>
 
         <!-- Submit Button -->
-        <div>
-          <button
-            type="submit"
-            :disabled="isLoading"
-            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <span v-if="isLoading" class="absolute left-0 inset-y-0 flex items-center pl-3">
-              <div class="loading-spinner h-4 w-4 border-white"></div>
-            </span>
-            <span v-else class="absolute left-0 inset-y-0 flex items-center pl-3">
-              <svg class="h-5 w-5 text-primary-500 group-hover:text-primary-400" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-              </svg>
-            </span>
-            {{ isLoading ? 'Memproses...' : 'Masuk' }}
-          </button>
-        </div>
+        <BaseButton
+          type="submit"
+          variant="primary"
+          size="lg"
+          :loading="isLoading"
+          :disabled="isLoading"
+          full-width
+        >
+          {{ isLoading ? 'Memproses...' : 'Masuk' }}
+        </BaseButton>
 
         <!-- Demo Credentials -->
         <div class="mt-6 p-4 bg-gray-100 rounded-md">
@@ -95,6 +78,8 @@ import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useToast } from 'vue-toastification'
+import BaseInput from '@/components/forms/BaseInput.vue'
+import BaseButton from '@/components/forms/BaseButton.vue'
 import type { LoginCredentials } from '@/types/auth'
 
 const router = useRouter()
@@ -110,11 +95,31 @@ const form = reactive<LoginCredentials>({
 // UI state
 const isLoading = ref(false)
 const errorMessage = ref('')
+const errors = reactive({
+  username: '',
+  password: '',
+})
 
 // Methods
+const validateForm = () => {
+  errors.username = ''
+  errors.password = ''
+  
+  if (!form.username) {
+    errors.username = 'Username wajib diisi'
+    return false
+  }
+  
+  if (!form.password) {
+    errors.password = 'Password wajib diisi'
+    return false
+  }
+  
+  return true
+}
+
 const handleLogin = async () => {
-  if (!form.username || !form.password) {
-    errorMessage.value = 'Username dan password wajib diisi'
+  if (!validateForm()) {
     return
   }
 

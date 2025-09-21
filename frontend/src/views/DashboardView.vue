@@ -70,8 +70,8 @@
         <div class="card-body">
           <div class="flex items-center">
             <div class="flex-shrink-0">
-              <div class="w-8 h-8 bg-info-100 rounded-md flex items-center justify-center">
-                <svg class="w-5 h-5 text-info-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div class="w-8 h-8 bg-blue-100 rounded-md flex items-center justify-center">
+                <svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
                 </svg>
               </div>
@@ -83,6 +83,27 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+      <!-- User Distribution Chart -->
+      <BaseChart
+        type="doughnut"
+        :data="userDistributionData"
+        title="Distribusi Pengguna"
+        subtitle="Berdasarkan peran pengguna"
+        :height="300"
+      />
+      
+      <!-- License Status Chart -->
+      <BaseChart
+        type="bar"
+        :data="licenseStatusData"
+        title="Status Lisensi"
+        subtitle="Distribusi status lisensi"
+        :height="300"
+      />
     </div>
 
     <!-- Quick Actions -->
@@ -220,8 +241,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+import BaseChart from '@/components/charts/BaseChart.vue'
 
 const authStore = useAuthStore()
 
@@ -240,6 +262,49 @@ const recentActivity = ref([
     created_at: new Date().toISOString(),
   },
 ])
+
+// Chart Data
+const userDistributionData = computed(() => ({
+  labels: ['Admin', 'Guru', 'Siswa'],
+  datasets: [
+    {
+      label: 'Jumlah Pengguna',
+      data: [1, 1, 1],
+      backgroundColor: [
+        '#3B82F6', // Primary blue
+        '#10B981', // Success green
+        '#F59E0B', // Warning yellow
+      ],
+      borderColor: [
+        '#2563EB',
+        '#059669',
+        '#D97706',
+      ],
+      borderWidth: 2,
+    },
+  ],
+}))
+
+const licenseStatusData = computed(() => ({
+  labels: ['Aktif', 'Nonaktif', 'Expired'],
+  datasets: [
+    {
+      label: 'Jumlah Lisensi',
+      data: [1, 0, 0],
+      backgroundColor: [
+        '#10B981', // Success green
+        '#6B7280', // Gray
+        '#EF4444', // Danger red
+      ],
+      borderColor: [
+        '#059669',
+        '#4B5563',
+        '#DC2626',
+      ],
+      borderWidth: 1,
+    },
+  ],
+}))
 
 // Methods
 const formatDate = (dateString: string) => {
