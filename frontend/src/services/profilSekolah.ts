@@ -3,68 +3,72 @@ import api from './api'
 // Profil Sekolah Types
 export interface ProfilSekolah {
   id: number
-  npsn: string
   nama_sekolah: string
-  jenjang: 'SD' | 'SMP' | 'SMA' | 'SMK'
+  jenis_sekolah: 'negeri' | 'swasta' | 'yayasan'
+  jenjang_aktif: string[]
+  multi_jenjang: boolean
   alamat: string
-  kelurahan: string
-  kecamatan: string
-  kabupaten_kota: string
-  provinsi: string
-  kode_pos: string
   telepon: string
   email: string
   website: string
-  kepala_sekolah: string
-  nip_kepala_sekolah: string
   logo: string
-  struktur_organisasi: string
+  struktur_organisasi: any
+  sejarah: string
   visi: string
   misi: string
+  tujuan: string
+  status: boolean
+  tahun_berdiri: number
+  npsn: string
+  akreditasi: string
+  kepala_sekolah: string
+  wakil_kepala_sekolah: string
   created_at: string
   updated_at: string
 }
 
 export interface CreateProfilSekolahData {
-  npsn: string
   nama_sekolah: string
-  jenjang: string
+  jenis_sekolah: 'negeri' | 'swasta' | 'yayasan'
+  jenjang_aktif: string[]
+  multi_jenjang: boolean
   alamat: string
-  kelurahan: string
-  kecamatan: string
-  kabupaten_kota: string
-  provinsi: string
-  kode_pos: string
   telepon: string
   email: string
-  website?: string
-  kepala_sekolah: string
-  nip_kepala_sekolah: string
+  website: string
   logo?: File
-  struktur_organisasi?: string
-  visi: string
-  misi: string
+  struktur_organisasi?: any
+  sejarah?: string
+  visi?: string
+  misi?: string
+  tujuan?: string
+  tahun_berdiri?: number
+  npsn: string
+  akreditasi?: string
+  kepala_sekolah?: string
+  wakil_kepala_sekolah?: string
 }
 
 export interface UpdateProfilSekolahData {
-  npsn?: string
   nama_sekolah?: string
-  jenjang?: string
+  jenis_sekolah?: 'negeri' | 'swasta' | 'yayasan'
+  jenjang_aktif?: string[]
+  multi_jenjang?: boolean
   alamat?: string
-  kelurahan?: string
-  kecamatan?: string
-  kabupaten_kota?: string
-  provinsi?: string
-  kode_pos?: string
   telepon?: string
   email?: string
   website?: string
-  kepala_sekolah?: string
-  nip_kepala_sekolah?: string
   logo?: File
-  struktur_organisasi?: string
+  struktur_organisasi?: any
+  sejarah?: string
   visi?: string
   misi?: string
+  tujuan?: string
+  tahun_berdiri?: number
+  npsn?: string
+  akreditasi?: string
+  kepala_sekolah?: string
+  wakil_kepala_sekolah?: string
 }
 
 export interface ProfilSekolahListResponse {
