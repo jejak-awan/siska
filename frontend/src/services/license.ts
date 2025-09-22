@@ -4,7 +4,7 @@ import api from './api'
 export interface License {
   id: number
   license_key: string
-  license_type: 'trial' | 'basic' | 'premium' | 'enterprise'
+  license_type: 'trial' | 'single' | 'multi' | 'enterprise'
   max_users: number
   jenjang_access: string[]
   features: string[]
@@ -16,7 +16,7 @@ export interface License {
 
 export interface CreateLicenseData {
   license_key: string
-  license_type: string
+  license_type: 'trial' | 'single' | 'multi' | 'enterprise'
   max_users: number
   jenjang_access: string[]
   features: string[]
@@ -25,7 +25,7 @@ export interface CreateLicenseData {
 
 export interface UpdateLicenseData {
   license_key?: string
-  license_type?: string
+  license_type?: 'trial' | 'single' | 'multi' | 'enterprise'
   max_users?: number
   jenjang_access?: string[]
   features?: string[]
@@ -54,49 +54,56 @@ class LicenseService {
     license_type?: string
     is_active?: boolean
   }): Promise<LicenseListResponse> {
-    return api.get<LicenseListResponse>('/licenses', { params })
+    const response = await api.get<LicenseListResponse>('/licenses', { params })
+    return response.data
   }
 
   /**
    * Get license by ID
    */
   async getLicense(id: number): Promise<{ data: License }> {
-    return api.get<{ data: License }>(`/licenses/${id}`)
+    const response = await api.get<{ data: License }>(`/licenses/${id}`)
+    return response.data
   }
 
   /**
    * Create new license
    */
   async createLicense(data: CreateLicenseData): Promise<{ data: License }> {
-    return api.post<{ data: License }>('/licenses', data)
+    const response = await api.post<{ data: License }>('/licenses', data)
+    return response.data
   }
 
   /**
    * Update license
    */
   async updateLicense(id: number, data: UpdateLicenseData): Promise<{ data: License }> {
-    return api.put<{ data: License }>(`/licenses/${id}`, data)
+    const response = await api.put<{ data: License }>(`/licenses/${id}`, data)
+    return response.data
   }
 
   /**
    * Delete license
    */
   async deleteLicense(id: number): Promise<{ success: boolean; message: string }> {
-    return api.delete<{ success: boolean; message: string }>(`/licenses/${id}`)
+    const response = await api.delete<{ success: boolean; message: string }>(`/licenses/${id}`)
+    return response.data
   }
 
   /**
    * Activate license
    */
   async activateLicense(id: number): Promise<{ data: License }> {
-    return api.post<{ data: License }>(`/licenses/${id}/activate`)
+    const response = await api.post<{ data: License }>(`/licenses/${id}/activate`)
+    return response.data
   }
 
   /**
    * Deactivate license
    */
   async deactivateLicense(id: number): Promise<{ data: License }> {
-    return api.post<{ data: License }>(`/licenses/${id}/deactivate`)
+    const response = await api.post<{ data: License }>(`/licenses/${id}/deactivate`)
+    return response.data
   }
 
   /**
@@ -111,7 +118,7 @@ class LicenseService {
       message: string
     }
   }> {
-    return api.get<{ 
+    const response = await api.get<{ 
       data: { 
         is_valid: boolean
         is_active: boolean
@@ -120,6 +127,7 @@ class LicenseService {
         message: string
       }
     }>(`/licenses/${id}/check`)
+    return response.data
   }
 
   /**
@@ -136,7 +144,7 @@ class LicenseService {
       enterprise_licenses: number
     }
   }> {
-    return api.get<{
+    const response = await api.get<{
       data: {
         total_licenses: number
         active_licenses: number
@@ -147,6 +155,7 @@ class LicenseService {
         enterprise_licenses: number
       }
     }>('/licenses/stats')
+    return response.data
   }
 
   /**
@@ -159,13 +168,14 @@ class LicenseService {
       message: string
     }
   }> {
-    return api.post<{
+    const response = await api.post<{
       data: {
         is_valid: boolean
         license_type?: string
         message: string
       }
     }>('/licenses/validate', { license_key: licenseKey })
+    return response.data
   }
 }
 
