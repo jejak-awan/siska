@@ -25,9 +25,81 @@
       <div class="loading-spinner"></div>
     </div>
 
+    <!-- Search and Filter Section -->
+    <div v-else class="card mb-6">
+      <div class="card-body">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Search Input -->
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Cari Sekolah</label>
+            <div class="relative">
+              <input
+                v-model="searchQuery"
+                type="text"
+                placeholder="Cari berdasarkan nama sekolah, NPSN, atau kota..."
+                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              />
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Jenjang Filter -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Filter Jenjang</label>
+            <select
+              v-model="jenjangFilter"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+            >
+              <option value="">Semua Jenjang</option>
+              <option value="SD">SD</option>
+              <option value="SMP">SMP</option>
+              <option value="SMA">SMA</option>
+              <option value="SMK">SMK</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Filter Tags -->
+        <div v-if="hasActiveFilters" class="mt-4 flex flex-wrap gap-2">
+          <span
+            v-if="searchQuery"
+            class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-primary-100 text-primary-800"
+          >
+            Pencarian: "{{ searchQuery }}"
+            <button @click="searchQuery = ''" class="ml-2 text-primary-600 hover:text-primary-800">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </span>
+          <span
+            v-if="jenjangFilter"
+            class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-primary-100 text-primary-800"
+          >
+            Jenjang: {{ jenjangFilter }}
+            <button @click="jenjangFilter = ''" class="ml-2 text-primary-600 hover:text-primary-800">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </span>
+          <button
+            @click="clearAllFilters"
+            class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-800 hover:bg-gray-200"
+          >
+            Hapus Semua Filter
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Schools Grid -->
-    <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div v-if="schools.length === 0" class="col-span-full">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div v-if="filteredSchools.length === 0" class="col-span-full">
         <div class="card">
           <div class="card-body text-center py-12">
             <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -39,7 +111,7 @@
       </div>
 
       <div
-        v-for="school in schools"
+        v-for="school in filteredSchools"
         :key="school?.id || Math.random()"
         v-if="school"
         class="card hover:shadow-lg transition-shadow"
@@ -225,6 +297,10 @@ const isSubmitting = ref(false)
 const editingId = ref<number | null>(null)
 const logoInput = ref<HTMLInputElement>()
 
+// Search and Filter
+const searchQuery = ref('')
+const jenjangFilter = ref('')
+
 // Form data
 const form = reactive<CreateProfilSekolahData>({
   sekolah_id: 0,
@@ -246,6 +322,33 @@ const jenjangOptions = [
   { value: 'SMA', label: 'Sekolah Menengah Atas (SMA)' },
   { value: 'SMK', label: 'Sekolah Menengah Kejuruan (SMK)' },
 ]
+
+// Computed properties
+const filteredSchools = computed(() => {
+  let filtered = schools.value
+
+  // Search filter
+  if (searchQuery.value) {
+    const query = searchQuery.value.toLowerCase()
+    filtered = filtered.filter(school => 
+      school?.nama_sekolah?.toLowerCase().includes(query) ||
+      school?.npsn?.toLowerCase().includes(query) ||
+      school?.kota?.toLowerCase().includes(query) ||
+      school?.provinsi?.toLowerCase().includes(query)
+    )
+  }
+
+  // Jenjang filter
+  if (jenjangFilter.value) {
+    filtered = filtered.filter(school => school?.jenjang === jenjangFilter.value)
+  }
+
+  return filtered
+})
+
+const hasActiveFilters = computed(() => {
+  return searchQuery.value || jenjangFilter.value
+})
 
 // Methods
 const loadSchools = async () => {
@@ -306,6 +409,11 @@ const clearErrors = () => {
   Object.keys(errors).forEach(key => {
     delete errors[key]
   })
+}
+
+const clearAllFilters = () => {
+  searchQuery.value = ''
+  jenjangFilter.value = ''
 }
 
 const handleLogoChange = (event: Event) => {
