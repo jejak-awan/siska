@@ -93,28 +93,32 @@ class ProfilSekolahService {
     provinsi?: string
     kabupaten_kota?: string
   }): Promise<ProfilSekolahListResponse> {
-    return api.get<ProfilSekolahListResponse>('/profil-sekolah', { params })
+    const response = await api.get<ProfilSekolahListResponse>('/profil-sekolah', { params })
+    return response.data
   }
 
   /**
    * Get school profile by ID
    */
   async getProfilSekolahById(id: number): Promise<{ data: ProfilSekolah }> {
-    return api.get<{ data: ProfilSekolah }>(`/profil-sekolah/${id}`)
+    const response = await api.get<{ data: ProfilSekolah }>(`/profil-sekolah/${id}`)
+    return response.data
   }
 
   /**
    * Get school profile by NPSN
    */
   async getProfilSekolahByNpsn(npsn: string): Promise<{ data: ProfilSekolah }> {
-    return api.get<{ data: ProfilSekolah }>(`/profil-sekolah/npsn/${npsn}`)
+    const response = await api.get<{ data: ProfilSekolah }>(`/profil-sekolah/npsn/${npsn}`)
+    return response.data
   }
 
   /**
    * Get school profiles by jenjang
    */
   async getProfilSekolahByJenjang(jenjang: string): Promise<{ data: ProfilSekolah[] }> {
-    return api.get<{ data: ProfilSekolah[] }>(`/profil-sekolah/jenjang/${jenjang}`)
+    const response = await api.get<{ data: ProfilSekolah[] }>(`/profil-sekolah/jenjang/${jenjang}`)
+    return response.data
   }
 
   /**
@@ -130,7 +134,12 @@ class ProfilSekolahService {
       }
     })
 
-    return api.upload<{ data: ProfilSekolah }>('/profil-sekolah', formData)
+    const response = await api.post<{ data: ProfilSekolah }>('/profil-sekolah', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    return response.data
   }
 
   /**
@@ -146,16 +155,20 @@ class ProfilSekolahService {
       }
     })
 
-    return api.upload<{ data: ProfilSekolah }>(`/profil-sekolah/${id}`, formData, {
-      method: 'PUT'
+    const response = await api.post<{ data: ProfilSekolah }>(`/profil-sekolah/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     })
+    return response.data
   }
 
   /**
    * Delete school profile
    */
   async deleteProfilSekolah(id: number): Promise<{ success: boolean; message: string }> {
-    return api.delete<{ success: boolean; message: string }>(`/profil-sekolah/${id}`)
+    const response = await api.delete<{ success: boolean; message: string }>(`/profil-sekolah/${id}`)
+    return response.data
   }
 
   /**
@@ -174,7 +187,7 @@ class ProfilSekolahService {
       sekolah_per_kabupaten: Record<string, number>
     }
   }> {
-    return api.get<{
+    const response = await api.get<{
       data: {
         total_sekolah: number
         sekolah_per_jenjang: {
@@ -187,15 +200,17 @@ class ProfilSekolahService {
         sekolah_per_kabupaten: Record<string, number>
       }
     }>('/profil-sekolah/stats')
+    return response.data
   }
 
   /**
    * Search school profiles
    */
   async searchProfilSekolah(query: string): Promise<{ data: ProfilSekolah[] }> {
-    return api.get<{ data: ProfilSekolah[] }>('/profil-sekolah/search', {
+    const response = await api.get<{ data: ProfilSekolah[] }>('/profil-sekolah/search', {
       params: { q: query }
     })
+    return response.data
   }
 
   /**
@@ -208,20 +223,22 @@ class ProfilSekolahService {
       message: string
     }
   }> {
-    return api.post<{
+    const response = await api.post<{
       data: {
         is_valid: boolean
         is_available: boolean
         message: string
       }
     }>('/profil-sekolah/validate-npsn', { npsn })
+    return response.data
   }
 
   /**
    * Get active schools
    */
   async getActiveSchools(): Promise<{ data: ProfilSekolah[] }> {
-    return api.get<{ data: ProfilSekolah[] }>('/profil-sekolah/active')
+    const response = await api.get<{ data: ProfilSekolah[] }>('/profil-sekolah/active')
+    return response.data
   }
 }
 
