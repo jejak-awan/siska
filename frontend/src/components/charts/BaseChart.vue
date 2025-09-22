@@ -151,6 +151,9 @@ const defaultOptions: ChartOptions = {
 const createChart = () => {
   if (!chartCanvas.value) return
   
+  // Ensure canvas is ready
+  if (!chartCanvas.value.getContext) return
+  
   const config: ChartConfiguration = {
     type: props.type,
     data: props.data,
@@ -160,8 +163,12 @@ const createChart = () => {
     },
   }
   
-  chartInstance.value = new ChartJS(chartCanvas.value, config)
-  updateLegend()
+  try {
+    chartInstance.value = new ChartJS(chartCanvas.value, config)
+    updateLegend()
+  } catch (error) {
+    console.error('Chart creation error:', error)
+  }
 }
 
 const updateChart = () => {
