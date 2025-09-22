@@ -222,13 +222,17 @@
             required
           />
           
-          <BaseInput
-            v-model="form.expires_at"
-            label="Tanggal Kadaluarsa"
-            type="date"
-            :error="errors.expires_at"
-            required
-          />
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Kadaluarsa</label>
+            <input
+              v-model="form.expires_at"
+              type="date"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              :class="{ 'border-red-500': errors.expires_at }"
+              required
+            />
+            <p v-if="errors.expires_at" class="mt-1 text-sm text-red-600">{{ errors.expires_at }}</p>
+          </div>
         </div>
 
         <div class="flex justify-end space-x-3">
@@ -278,7 +282,7 @@ const statusFilter = ref('')
 // Form data
 const form = reactive<CreateLicenseData>({
   license_key: '',
-  license_type: '',
+  license_type: 'trial',
   max_users: 0,
   jenjang_access: [],
   features: [],
@@ -342,8 +346,7 @@ const loadLicenses = async () => {
   isLoading.value = true
   try {
     const response = await licenseService.getLicenses()
-    const licensesData = response.data
-    licenses.value = licensesData?.data || licensesData || []
+    licenses.value = response.data || []
   } catch (error: any) {
     toast.error(error.message || 'Gagal memuat daftar lisensi')
   } finally {
@@ -375,7 +378,7 @@ const closeModal = () => {
 
 const resetForm = () => {
   form.license_key = ''
-  form.license_type = ''
+  form.license_type = 'trial'
   form.max_users = 0
   form.jenjang_access = []
   form.features = []
