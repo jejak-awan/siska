@@ -4,9 +4,10 @@
   "description": "SISKA Frontend - Sistem Informasi Sekolah Bidang Kesiswaan",
   "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
+    "kill-port": "lsof -ti:3001 | xargs -r kill -9 2>/dev/null || true",
+    "dev": "npm run kill-port && vite",
+    "build": "npm run kill-port && vite build",
+    "preview": "npm run kill-port && vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "type-check": "vue-tsc --noEmit"
   },
