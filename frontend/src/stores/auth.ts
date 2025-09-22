@@ -30,8 +30,7 @@ export const useAuthStore = defineStore('auth', () => {
         // Store token in localStorage
         localStorage.setItem('auth_token', response.data.token)
         
-        // Set default authorization header
-        authService.setAuthToken(response.data.token)
+        // Token will be automatically set by API interceptor
         
         return response
       } else {
@@ -58,7 +57,6 @@ export const useAuthStore = defineStore('auth', () => {
       token.value = null
       user.value = null
       localStorage.removeItem('auth_token')
-      authService.clearAuthToken()
       isLoading.value = false
     }
   }
@@ -74,7 +72,7 @@ export const useAuthStore = defineStore('auth', () => {
       
       if (response.success) {
         user.value = response.data.user
-        authService.setAuthToken(token.value)
+        // Token will be automatically set by API interceptor
       } else {
         throw new Error('Authentication failed')
       }
@@ -83,7 +81,6 @@ export const useAuthStore = defineStore('auth', () => {
       token.value = null
       user.value = null
       localStorage.removeItem('auth_token')
-      authService.clearAuthToken()
       throw error
     } finally {
       isLoading.value = false
@@ -146,7 +143,7 @@ export const useAuthStore = defineStore('auth', () => {
       if (response.success) {
         token.value = response.data.token
         localStorage.setItem('auth_token', response.data.token)
-        authService.setAuthToken(response.data.token)
+        // Token will be automatically set by API interceptor
         return response.data.token
       } else {
         throw new Error(response.message || 'Gagal memperbarui token')
@@ -163,7 +160,7 @@ export const useAuthStore = defineStore('auth', () => {
     const storedToken = localStorage.getItem('auth_token')
     if (storedToken) {
       token.value = storedToken
-      authService.setAuthToken(storedToken)
+      // Token will be automatically set by API interceptor
     }
   }
 

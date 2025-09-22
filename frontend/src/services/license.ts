@@ -1,0 +1,173 @@
+import { api } from './api'
+
+// License Types
+export interface License {
+  id: number
+  license_key: string
+  license_type: 'trial' | 'basic' | 'premium' | 'enterprise'
+  max_users: number
+  jenjang_access: string[]
+  features: string[]
+  expires_at: string
+  is_active: boolean
+  created_at: string
+  updated_at: string
+}
+
+export interface CreateLicenseData {
+  license_key: string
+  license_type: string
+  max_users: number
+  jenjang_access: string[]
+  features: string[]
+  expires_at: string
+}
+
+export interface UpdateLicenseData {
+  license_key?: string
+  license_type?: string
+  max_users?: number
+  jenjang_access?: string[]
+  features?: string[]
+  expires_at?: string
+  is_active?: boolean
+}
+
+export interface LicenseListResponse {
+  data: License[]
+  meta: {
+    current_page: number
+    last_page: number
+    per_page: number
+    total: number
+  }
+}
+
+class LicenseService {
+  /**
+   * Get all licenses with pagination
+   */
+  async getLicenses(params?: {
+    page?: number
+    per_page?: number
+    search?: string
+    license_type?: string
+    is_active?: boolean
+  }): Promise<LicenseListResponse> {
+    return api.get<LicenseListResponse>('/licenses', { params })
+  }
+
+  /**
+   * Get license by ID
+   */
+  async getLicense(id: number): Promise<{ data: License }> {
+    return api.get<{ data: License }>(`/licenses/${id}`)
+  }
+
+  /**
+   * Create new license
+   */
+  async createLicense(data: CreateLicenseData): Promise<{ data: License }> {
+    return api.post<{ data: License }>('/licenses', data)
+  }
+
+  /**
+   * Update license
+   */
+  async updateLicense(id: number, data: UpdateLicenseData): Promise<{ data: License }> {
+    return api.put<{ data: License }>(`/licenses/${id}`, data)
+  }
+
+  /**
+   * Delete license
+   */
+  async deleteLicense(id: number): Promise<{ success: boolean; message: string }> {
+    return api.delete<{ success: boolean; message: string }>(`/licenses/${id}`)
+  }
+
+  /**
+   * Activate license
+   */
+  async activateLicense(id: number): Promise<{ data: License }> {
+    return api.post<{ data: License }>(`/licenses/${id}/activate`)
+  }
+
+  /**
+   * Deactivate license
+   */
+  async deactivateLicense(id: number): Promise<{ data: License }> {
+    return api.post<{ data: License }>(`/licenses/${id}/deactivate`)
+  }
+
+  /**
+   * Check license status
+   */
+  async checkLicense(id: number): Promise<{ 
+    data: { 
+      is_valid: boolean
+      is_active: boolean
+      is_expired: boolean
+      days_remaining: number
+      message: string
+    }
+  }> {
+    return api.get<{ 
+      data: { 
+        is_valid: boolean
+        is_active: boolean
+        is_expired: boolean
+        days_remaining: number
+        message: string
+      }
+    }>(`/licenses/${id}/check`)
+  }
+
+  /**
+   * Get license statistics
+   */
+  async getLicenseStats(): Promise<{
+    data: {
+      total_licenses: number
+      active_licenses: number
+      expired_licenses: number
+      trial_licenses: number
+      basic_licenses: number
+      premium_licenses: number
+      enterprise_licenses: number
+    }
+  }> {
+    return api.get<{
+      data: {
+        total_licenses: number
+        active_licenses: number
+        expired_licenses: number
+        trial_licenses: number
+        basic_licenses: number
+        premium_licenses: number
+        enterprise_licenses: number
+      }
+    }>('/licenses/stats')
+  }
+
+  /**
+   * Validate license key
+   */
+  async validateLicenseKey(licenseKey: string): Promise<{
+    data: {
+      is_valid: boolean
+      license_type?: string
+      message: string
+    }
+  }> {
+    return api.post<{
+      data: {
+        is_valid: boolean
+        license_type?: string
+        message: string
+      }
+    }>('/licenses/validate', { license_key: licenseKey })
+  }
+}
+
+export const licenseService = new LicenseService()
+export default licenseService

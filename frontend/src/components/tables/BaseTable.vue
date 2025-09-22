@@ -435,3 +435,4 @@ watch(searchQuery, () => {
   currentPage.value = 1
 })
 </script>
+
