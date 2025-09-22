@@ -1,4 +1,4 @@
-import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosResponse, type AxiosError } from 'axios'
+import axios, { type AxiosInstance, type InternalAxiosRequestConfig, type AxiosResponse, type AxiosError } from 'axios'
 import { useToast } from 'vue-toastification'
 import { useAuthStore } from '@/stores/auth'
 
@@ -18,7 +18,7 @@ const apiClient: AxiosInstance = axios.create({
 
 // Request interceptor
 apiClient.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
+  (config: InternalAxiosRequestConfig) => {
     // Add auth token to requests
     const token = localStorage.getItem('auth_token')
     if (token && config.headers) {
@@ -26,7 +26,7 @@ apiClient.interceptors.request.use(
     }
     
     // Add request timestamp for debugging
-    config.metadata = { startTime: new Date() }
+    ;(config as any).metadata = { startTime: new Date() }
     
     return config
   },
@@ -39,8 +39,8 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => {
     // Calculate request duration
-    if (response.config.metadata?.startTime) {
-      const duration = new Date().getTime() - response.config.metadata.startTime.getTime()
+    if ((response.config as any).metadata?.startTime) {
+      const duration = new Date().getTime() - (response.config as any).metadata.startTime.getTime()
       console.log(`API Request: ${response.config.method?.toUpperCase()} ${response.config.url} - ${duration}ms`)
     }
     
@@ -73,14 +73,14 @@ apiClient.interceptors.response.use(
           
         case 422:
           // Validation Error
-          if (data?.errors) {
+          if ((data as any)?.errors) {
             // Handle validation errors
-            const errorMessages = Object.values(data.errors).flat()
+            const errorMessages = Object.values((data as any).errors).flat()
             errorMessages.forEach((message: any) => {
               toast.error(message)
             })
           } else {
-            toast.error(data?.message || 'Data tidak valid.')
+            toast.error((data as any)?.message || 'Data tidak valid.')
           }
           break
           
@@ -95,7 +95,7 @@ apiClient.interceptors.response.use(
           break
           
         default:
-          toast.error(data?.message || 'Terjadi kesalahan yang tidak diketahui.')
+          toast.error((data as any)?.message || 'Terjadi kesalahan yang tidak diketahui.')
       }
     } else if (error.request) {
       // Network Error
