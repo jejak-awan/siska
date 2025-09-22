@@ -182,7 +182,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, reactive } from 'vue'
-import { licenseService, type License, type CreateLicensePayload } from '@/services/license'
+import { licenseService, type License, type CreateLicenseData } from '@/services/license'
 import { useToast } from 'vue-toastification'
 import BaseButton from '@/components/forms/BaseButton.vue'
 import BaseInput from '@/components/forms/BaseInput.vue'
@@ -200,10 +200,12 @@ const isSubmitting = ref(false)
 const editingId = ref<number | null>(null)
 
 // Form data
-const form = reactive<CreateLicensePayload>({
+const form = reactive<CreateLicenseData>({
   license_key: '',
   license_type: '',
   max_users: 0,
+  jenjang_access: [],
+  features: [],
   expires_at: '',
 })
 
@@ -230,7 +232,7 @@ const formatDate = (dateString: string) => {
 const loadLicenses = async () => {
   isLoading.value = true
   try {
-    const response = await licenseService.getAllLicenses()
+    const response = await licenseService.getLicenses()
     licenses.value = response.data || []
   } catch (error: any) {
     toast.error(error.message || 'Gagal memuat daftar lisensi')
@@ -265,6 +267,8 @@ const resetForm = () => {
   form.license_key = ''
   form.license_type = ''
   form.max_users = 0
+  form.jenjang_access = []
+  form.features = []
   form.expires_at = ''
   clearErrors()
 }

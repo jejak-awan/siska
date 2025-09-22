@@ -63,6 +63,9 @@ import {
   type ChartOptions
 } from 'chart.js'
 
+// Import controllers
+import { DoughnutController, BarController, LineController, PieController, PolarAreaController } from 'chart.js'
+
 // Register Chart.js components
 ChartJS.register(
   CategoryScale,
@@ -74,7 +77,12 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  Filler
+  Filler,
+  DoughnutController,
+  BarController,
+  LineController,
+  PieController,
+  PolarAreaController
 )
 
 interface LegendItem {

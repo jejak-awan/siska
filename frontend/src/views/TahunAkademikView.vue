@@ -182,7 +182,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, reactive } from 'vue'
-import { tahunAkademikService, type TahunAkademik, type CreateTahunAkademikPayload } from '@/services/tahunAkademik'
+import { tahunAkademikService, type TahunAkademik, type CreateTahunAkademikData } from '@/services/tahunAkademik'
 import { useToast } from 'vue-toastification'
 import BaseButton from '@/components/forms/BaseButton.vue'
 import BaseInput from '@/components/forms/BaseInput.vue'
@@ -199,7 +199,7 @@ const isSubmitting = ref(false)
 const editingId = ref<number | null>(null)
 
 // Form data
-const form = reactive<CreateTahunAkademikPayload>({
+const form = reactive<CreateTahunAkademikData>({
   sekolah_id: 0,
   tahun_mulai: 0,
   tahun_selesai: 0,
@@ -221,7 +221,7 @@ const formatDate = (dateString: string) => {
 const loadAcademicYears = async () => {
   isLoading.value = true
   try {
-    const response = await tahunAkademikService.getAllTahunAkademik()
+    const response = await tahunAkademikService.getTahunAkademik()
     academicYears.value = response.data || []
   } catch (error: any) {
     toast.error(error.message || 'Gagal memuat daftar tahun akademik')

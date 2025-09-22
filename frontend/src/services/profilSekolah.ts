@@ -1,4 +1,4 @@
-import { api } from './api'
+import api from './api'
 
 // Profil Sekolah Types
 export interface ProfilSekolah {

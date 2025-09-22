@@ -329,9 +329,9 @@ const loadDashboardData = async () => {
   try {
     // Load data from multiple APIs in parallel
     const [licensesResponse, schoolsResponse, academicYearsResponse] = await Promise.allSettled([
-      licenseService.getAllLicenses(),
-      profilSekolahService.getAllProfilSekolah(),
-      tahunAkademikService.getAllTahunAkademik(),
+      licenseService.getLicenses(),
+      profilSekolahService.getProfilSekolah(),
+      tahunAkademikService.getTahunAkademik(),
     ])
 
     // Process licenses data

@@ -206,7 +206,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, reactive } from 'vue'
-import { profilSekolahService, type ProfilSekolah, type CreateProfilSekolahPayload } from '@/services/profilSekolah'
+import { profilSekolahService, type ProfilSekolah, type CreateProfilSekolahData } from '@/services/profilSekolah'
 import { useToast } from 'vue-toastification'
 import BaseButton from '@/components/forms/BaseButton.vue'
 import BaseInput from '@/components/forms/BaseInput.vue'
@@ -225,7 +225,7 @@ const editingId = ref<number | null>(null)
 const logoInput = ref<HTMLInputElement>()
 
 // Form data
-const form = reactive<CreateProfilSekolahPayload>({
+const form = reactive<CreateProfilSekolahData>({
   sekolah_id: 0,
   nama_sekolah: '',
   npsn: '',
@@ -250,7 +250,7 @@ const jenjangOptions = [
 const loadSchools = async () => {
   isLoading.value = true
   try {
-    const response = await profilSekolahService.getAllProfilSekolah()
+    const response = await profilSekolahService.getProfilSekolah()
     schools.value = response.data || []
   } catch (error: any) {
     toast.error(error.message || 'Gagal memuat daftar profil sekolah')
