@@ -243,9 +243,14 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+import { licenseService } from '@/services/license'
+import { profilSekolahService } from '@/services/profilSekolah'
+import { tahunAkademikService } from '@/services/tahunAkademik'
 import BaseChart from '@/components/charts/BaseChart.vue'
+import { useToast } from 'vue-toastification'
 
 const authStore = useAuthStore()
+const toast = useToast()
 
 // State
 const stats = ref({
@@ -255,6 +260,7 @@ const stats = ref({
   totalUsers: 0,
 })
 
+const isLoading = ref(false)
 const recentActivity = ref([
   {
     id: 1,
@@ -269,7 +275,7 @@ const userDistributionData = computed(() => ({
   datasets: [
     {
       label: 'Jumlah Pengguna',
-      data: [1, 1, 1],
+      data: [1, 1, 1], // Static for now, will be updated with real data
       backgroundColor: [
         '#3B82F6', // Primary blue
         '#10B981', // Success green
@@ -290,7 +296,7 @@ const licenseStatusData = computed(() => ({
   datasets: [
     {
       label: 'Jumlah Lisensi',
-      data: [1, 0, 0],
+      data: [stats.value.activeLicenses, 0, 0], // Dynamic based on real data
       backgroundColor: [
         '#10B981', // Success green
         '#6B7280', // Gray
@@ -319,13 +325,55 @@ const formatDate = (dateString: string) => {
 }
 
 const loadDashboardData = async () => {
-  // TODO: Load actual dashboard data from API
-  // For now, we'll use mock data
-  stats.value = {
-    totalSchools: 0,
-    activeLicenses: 1,
-    academicYears: 0,
-    totalUsers: 3,
+  isLoading.value = true
+  try {
+    // Load data from multiple APIs in parallel
+    const [licensesResponse, schoolsResponse, academicYearsResponse] = await Promise.allSettled([
+      licenseService.getAllLicenses(),
+      profilSekolahService.getAllProfilSekolah(),
+      tahunAkademikService.getAllTahunAkademik(),
+    ])
+
+    // Process licenses data
+    if (licensesResponse.status === 'fulfilled') {
+      const licenses = licensesResponse.value.data || []
+      stats.value.activeLicenses = licenses.filter((license: any) => license.is_active).length
+    }
+
+    // Process schools data
+    if (schoolsResponse.status === 'fulfilled') {
+      const schools = schoolsResponse.value.data || []
+      stats.value.totalSchools = schools.length
+    }
+
+    // Process academic years data
+    if (academicYearsResponse.status === 'fulfilled') {
+      const academicYears = academicYearsResponse.value.data || []
+      stats.value.academicYears = academicYears.length
+    }
+
+    // Update recent activity with real data
+    recentActivity.value = [
+      {
+        id: 1,
+        message: 'Dashboard berhasil dimuat dengan data real',
+        created_at: new Date().toISOString(),
+      },
+    ]
+
+  } catch (error: any) {
+    console.error('Error loading dashboard data:', error)
+    toast.error('Gagal memuat data dashboard')
+    
+    // Fallback to default values
+    stats.value = {
+      totalSchools: 0,
+      activeLicenses: 0,
+      academicYears: 0,
+      totalUsers: 3, // Static user count
+    }
+  } finally {
+    isLoading.value = false
   }
 }
 
