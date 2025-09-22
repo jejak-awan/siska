@@ -55,7 +55,10 @@
               <tr v-for="academicYear in academicYears" :key="academicYear?.id || Math.random()" v-if="academicYear" class="hover:bg-gray-50">
                 <td class="table-cell">
                   <div class="font-medium text-gray-900">
-                    {{ academicYear?.tahun_mulai }}/{{ academicYear?.tahun_selesai }}
+                    {{ academicYear?.tahun_akademik }}
+                  </div>
+                  <div class="text-sm text-gray-500">
+                    {{ formatDate(academicYear?.tanggal_mulai) }} - {{ formatDate(academicYear?.tanggal_selesai) }}
                   </div>
                 </td>
                 <td class="table-cell">
@@ -124,20 +127,28 @@
           />
           
           <BaseInput
-            v-model.number="form.tahun_mulai"
-            label="Tahun Mulai"
-            type="number"
-            placeholder="Masukkan tahun mulai"
-            :error="errors.tahun_mulai"
+            v-model="form.tahun_akademik"
+            label="Tahun Akademik"
+            placeholder="Masukkan tahun akademik (e.g., 2024/2025)"
+            :error="errors.tahun_akademik"
             required
           />
           
           <BaseInput
-            v-model.number="form.tahun_selesai"
-            label="Tahun Selesai"
-            type="number"
-            placeholder="Masukkan tahun selesai"
-            :error="errors.tahun_selesai"
+            v-model="form.tanggal_mulai"
+            label="Tanggal Mulai"
+            type="date"
+            placeholder="Masukkan tanggal mulai"
+            :error="errors.tanggal_mulai"
+            required
+          />
+          
+          <BaseInput
+            v-model="form.tanggal_selesai"
+            label="Tanggal Selesai"
+            type="date"
+            placeholder="Masukkan tanggal selesai"
+            :error="errors.tanggal_selesai"
             required
           />
         </div>
@@ -152,8 +163,9 @@
             <div class="ml-3">
               <h3 class="text-sm font-medium text-blue-800">Informasi</h3>
               <div class="mt-2 text-sm text-blue-700">
-                <p>Tahun akademik akan ditampilkan sebagai: <strong>{{ form.tahun_mulai }}/{{ form.tahun_selesai }}</strong></p>
-                <p class="mt-1">Pastikan tahun selesai lebih besar dari tahun mulai.</p>
+                <p>Tahun akademik: <strong>{{ form.tahun_akademik }}</strong></p>
+                <p class="mt-1">Periode: {{ formatDate(form.tanggal_mulai) }} - {{ formatDate(form.tanggal_selesai) }}</p>
+                <p class="mt-1">Pastikan tanggal selesai lebih besar dari tanggal mulai.</p>
               </div>
             </div>
           </div>
@@ -201,8 +213,10 @@ const editingId = ref<number | null>(null)
 // Form data
 const form = reactive<CreateTahunAkademikData>({
   sekolah_id: 0,
-  tahun_mulai: 0,
-  tahun_selesai: 0,
+  tahun_akademik: '',
+  tanggal_mulai: '',
+  tanggal_selesai: '',
+  keterangan: '',
 })
 
 // Form errors
@@ -242,8 +256,10 @@ const openEditModal = (academicYear: TahunAkademik) => {
   isEditing.value = true
   editingId.value = academicYear?.id
   form.sekolah_id = academicYear?.sekolah_id
-  form.tahun_mulai = academicYear?.tahun_mulai
-  form.tahun_selesai = academicYear?.tahun_selesai
+  form.tahun_akademik = academicYear?.tahun_akademik
+  form.tanggal_mulai = academicYear?.tanggal_mulai?.split('T')[0] // Convert to date input format
+  form.tanggal_selesai = academicYear?.tanggal_selesai?.split('T')[0] // Convert to date input format
+  form.keterangan = academicYear?.keterangan
   isModalOpen.value = true
 }
 
@@ -254,8 +270,10 @@ const closeModal = () => {
 
 const resetForm = () => {
   form.sekolah_id = 0
-  form.tahun_mulai = 0
-  form.tahun_selesai = 0
+  form.tahun_akademik = ''
+  form.tanggal_mulai = ''
+  form.tanggal_selesai = ''
+  form.keterangan = ''
   clearErrors()
 }
 
@@ -270,8 +288,8 @@ const submitForm = async () => {
   isSubmitting.value = true
 
   // Validation
-  if (form.tahun_selesai <= form.tahun_mulai) {
-    errors.tahun_selesai = 'Tahun selesai harus lebih besar dari tahun mulai'
+  if (form.tanggal_selesai <= form.tanggal_mulai) {
+    errors.tanggal_selesai = 'Tanggal selesai harus lebih besar dari tanggal mulai'
     isSubmitting.value = false
     return
   }
@@ -309,7 +327,7 @@ const activateAcademicYear = async (academicYear: TahunAkademik) => {
 }
 
 const deleteAcademicYear = async (academicYear: TahunAkademik) => {
-  if (!confirm(`Apakah Anda yakin ingin menghapus tahun akademik ${academicYear?.tahun_mulai}/${academicYear?.tahun_selesai}?`)) {
+  if (!confirm(`Apakah Anda yakin ingin menghapus tahun akademik ${academicYear?.tahun_akademik}?`)) {
     return
   }
 
