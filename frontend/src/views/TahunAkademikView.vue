@@ -134,23 +134,29 @@
             required
           />
           
-          <BaseInput
-            v-model="form.tanggal_mulai"
-            label="Tanggal Mulai"
-            type="date"
-            placeholder="Masukkan tanggal mulai"
-            :error="errors.tanggal_mulai"
-            required
-          />
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Mulai</label>
+            <input
+              v-model="form.tanggal_mulai"
+              type="date"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              :class="{ 'border-red-500': errors.tanggal_mulai }"
+              required
+            />
+            <p v-if="errors.tanggal_mulai" class="mt-1 text-sm text-red-600">{{ errors.tanggal_mulai }}</p>
+          </div>
           
-          <BaseInput
-            v-model="form.tanggal_selesai"
-            label="Tanggal Selesai"
-            type="date"
-            placeholder="Masukkan tanggal selesai"
-            :error="errors.tanggal_selesai"
-            required
-          />
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Selesai</label>
+            <input
+              v-model="form.tanggal_selesai"
+              type="date"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              :class="{ 'border-red-500': errors.tanggal_selesai }"
+              required
+            />
+            <p v-if="errors.tanggal_selesai" class="mt-1 text-sm text-red-600">{{ errors.tanggal_selesai }}</p>
+          </div>
         </div>
 
         <div class="bg-blue-50 border border-blue-200 rounded-md p-4">
@@ -236,8 +242,7 @@ const loadAcademicYears = async () => {
   isLoading.value = true
   try {
     const response = await tahunAkademikService.getTahunAkademik()
-    const academicYearsData = response.data
-    academicYears.value = academicYearsData?.data || academicYearsData || []
+    academicYears.value = response.data || []
   } catch (error: any) {
     toast.error(error.message || 'Gagal memuat daftar tahun akademik')
   } finally {

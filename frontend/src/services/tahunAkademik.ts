@@ -4,29 +4,31 @@ import api from './api'
 export interface TahunAkademik {
   id: number
   tahun_akademik: string
-  semester: 'ganjil' | 'genap'
   tanggal_mulai: string
   tanggal_selesai: string
+  status: 'upcoming' | 'active' | 'completed' | 'cancelled'
   is_active: boolean
   sekolah_id: number
+  keterangan: string
   created_at: string
   updated_at: string
 }
 
 export interface CreateTahunAkademikData {
   tahun_akademik: string
-  semester: string
   tanggal_mulai: string
   tanggal_selesai: string
   sekolah_id: number
+  keterangan?: string
 }
 
 export interface UpdateTahunAkademikData {
   tahun_akademik?: string
-  semester?: string
   tanggal_mulai?: string
   tanggal_selesai?: string
+  status?: 'upcoming' | 'active' | 'completed' | 'cancelled'
   is_active?: boolean
+  keterangan?: string
 }
 
 export interface TahunAkademikListResponse {
