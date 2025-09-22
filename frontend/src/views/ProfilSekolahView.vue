@@ -272,14 +272,14 @@ const openEditModal = (school: ProfilSekolah) => {
   if (!school) return
   
   isEditing.value = true
-  editingId.value = school.id
-  form.sekolah_id = school.sekolah_id
-  form.nama_sekolah = school.nama_sekolah
-  form.npsn = school.npsn
-  form.jenjang = school.jenjang
-  form.alamat = school.alamat
-  form.kota = school.kota
-  form.provinsi = school.provinsi
+  editingId.value = school?.id
+  form.sekolah_id = school?.sekolah_id
+  form.nama_sekolah = school?.nama_sekolah
+  form.npsn = school?.npsn
+  form.jenjang = school?.jenjang
+  form.alamat = school?.alamat
+  form.kota = school?.kota
+  form.provinsi = school?.provinsi
   isModalOpen.value = true
 }
 
@@ -344,12 +344,12 @@ const submitForm = async () => {
 const deleteSchool = async (school: ProfilSekolah) => {
   if (!school) return
   
-  if (!confirm(`Apakah Anda yakin ingin menghapus profil sekolah ${school.nama_sekolah}?`)) {
+  if (!confirm(`Apakah Anda yakin ingin menghapus profil sekolah ${school?.nama_sekolah}?`)) {
     return
   }
 
   try {
-    await profilSekolahService.deleteProfilSekolah(school.id)
+    await profilSekolahService.deleteProfilSekolah(school?.id)
     toast.success('Profil sekolah berhasil dihapus')
     loadSchools()
   } catch (error: any) {

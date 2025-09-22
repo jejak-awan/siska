@@ -240,10 +240,10 @@ const openCreateModal = () => {
 
 const openEditModal = (academicYear: TahunAkademik) => {
   isEditing.value = true
-  editingId.value = academicYear.id
-  form.sekolah_id = academicYear.sekolah_id
-  form.tahun_mulai = academicYear.tahun_mulai
-  form.tahun_selesai = academicYear.tahun_selesai
+  editingId.value = academicYear?.id
+  form.sekolah_id = academicYear?.sekolah_id
+  form.tahun_mulai = academicYear?.tahun_mulai
+  form.tahun_selesai = academicYear?.tahun_selesai
   isModalOpen.value = true
 }
 
@@ -300,7 +300,7 @@ const submitForm = async () => {
 
 const activateAcademicYear = async (academicYear: TahunAkademik) => {
   try {
-    await tahunAkademikService.activateTahunAkademik(academicYear.id)
+    await tahunAkademikService.activateTahunAkademik(academicYear?.id)
     toast.success('Tahun akademik berhasil diaktifkan')
     loadAcademicYears()
   } catch (error: any) {
@@ -309,12 +309,12 @@ const activateAcademicYear = async (academicYear: TahunAkademik) => {
 }
 
 const deleteAcademicYear = async (academicYear: TahunAkademik) => {
-  if (!confirm(`Apakah Anda yakin ingin menghapus tahun akademik ${academicYear.tahun_mulai}/${academicYear.tahun_selesai}?`)) {
+  if (!confirm(`Apakah Anda yakin ingin menghapus tahun akademik ${academicYear?.tahun_mulai}/${academicYear?.tahun_selesai}?`)) {
     return
   }
 
   try {
-    await tahunAkademikService.deleteTahunAkademik(academicYear.id)
+    await tahunAkademikService.deleteTahunAkademik(academicYear?.id)
     toast.success('Tahun akademik berhasil dihapus')
     loadAcademicYears()
   } catch (error: any) {

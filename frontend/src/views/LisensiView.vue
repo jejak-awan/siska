@@ -251,11 +251,11 @@ const openCreateModal = () => {
 
 const openEditModal = (license: License) => {
   isEditing.value = true
-  editingId.value = license.id
-  form.license_key = license.license_key
-  form.license_type = license.license_type
-  form.max_users = license.max_users
-  form.expires_at = license.expires_at.split('T')[0] // Convert to date input format
+  editingId.value = license?.id
+  form.license_key = license?.license_key
+  form.license_type = license?.license_type
+  form.max_users = license?.max_users
+  form.expires_at = license?.expires_at?.split('T')[0] // Convert to date input format
   isModalOpen.value = true
 }
 
@@ -308,11 +308,11 @@ const submitForm = async () => {
 
 const toggleLicenseStatus = async (license: License) => {
   try {
-    if (license.is_active) {
-      await licenseService.deactivateLicense(license.id)
+    if (license?.is_active) {
+      await licenseService.deactivateLicense(license?.id)
       toast.success('Lisensi berhasil dinonaktifkan')
     } else {
-      await licenseService.activateLicense(license.id)
+      await licenseService.activateLicense(license?.id)
       toast.success('Lisensi berhasil diaktifkan')
     }
     loadLicenses()
@@ -322,12 +322,12 @@ const toggleLicenseStatus = async (license: License) => {
 }
 
 const deleteLicense = async (license: License) => {
-  if (!confirm(`Apakah Anda yakin ingin menghapus lisensi ${license.license_key}?`)) {
+  if (!confirm(`Apakah Anda yakin ingin menghapus lisensi ${license?.license_key}?`)) {
     return
   }
 
   try {
-    await licenseService.deleteLicense(license.id)
+    await licenseService.deleteLicense(license?.id)
     toast.success('Lisensi berhasil dihapus')
     loadLicenses()
   } catch (error: any) {

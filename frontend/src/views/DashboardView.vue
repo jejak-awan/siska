@@ -338,7 +338,7 @@ const loadDashboardData = async () => {
     if (licensesResponse.status === 'fulfilled') {
       const licensesData = licensesResponse.value.data
       const licenses = licensesData?.data || licensesData || []
-      stats.value.activeLicenses = Array.isArray(licenses) ? licenses.filter((license: any) => license.is_active).length : 0
+      stats.value.activeLicenses = Array.isArray(licenses) ? licenses.filter((license: any) => license?.is_active).length : 0
     }
 
     // Process schools data
