@@ -37,10 +37,10 @@
             <thead class="table-header">
               <tr>
                 <th class="table-header-cell">Tahun Akademik</th>
-                <th class="table-header-cell">Sekolah ID</th>
+                <th class="table-header-cell">ID Sekolah</th>
                 <th class="table-header-cell">Status</th>
-                <th class="table-header-cell">Dibuat</th>
-                <th class="table-header-cell">Actions</th>
+                <th class="table-header-cell">Tanggal Dibuat</th>
+                <th class="table-header-cell">Aksi</th>
               </tr>
             </thead>
             <tbody class="table-body">
@@ -82,7 +82,7 @@
                       variant="outline"
                       size="sm"
                     >
-                      Edit
+                      Ubah
                     </BaseButton>
                     <BaseButton
                       v-if="!academicYear?.is_active"
@@ -111,7 +111,7 @@
     <!-- Create/Edit Modal -->
     <BaseModal
       :isOpen="isModalOpen"
-      :title="isEditing ? 'Edit Tahun Akademik' : 'Tambah Tahun Akademik Baru'"
+      :title="isEditing ? 'Ubah Tahun Akademik' : 'Tambah Tahun Akademik Baru'"
       @close="closeModal"
       size="lg"
     >
@@ -184,7 +184,7 @@
             variant="primary"
             :loading="isSubmitting"
           >
-            {{ isEditing ? 'Update' : 'Simpan' }}
+            {{ isEditing ? 'Perbarui' : 'Simpan' }}
           </BaseButton>
         </div>
       </form>

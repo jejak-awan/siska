@@ -160,7 +160,7 @@
               variant="outline"
               size="sm"
             >
-              Edit
+              Ubah
             </BaseButton>
             <BaseButton
               @click="deleteSchool(school)"
@@ -177,7 +177,7 @@
     <!-- Create/Edit Modal -->
     <BaseModal
       :isOpen="isModalOpen"
-      :title="isEditing ? 'Edit Profil Sekolah' : 'Tambah Profil Sekolah Baru'"
+      :title="isEditing ? 'Ubah Profil Sekolah' : 'Tambah Profil Sekolah Baru'"
       @close="closeModal"
       size="lg"
     >
@@ -274,7 +274,7 @@
             variant="primary"
             :loading="isSubmitting"
           >
-            {{ isEditing ? 'Update' : 'Simpan' }}
+            {{ isEditing ? 'Perbarui' : 'Simpan' }}
           </BaseButton>
         </div>
       </form>

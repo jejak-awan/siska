@@ -108,13 +108,13 @@
           <table class="table">
             <thead class="table-header">
               <tr>
-                <th class="table-header-cell">License Key</th>
-                <th class="table-header-cell">Tipe</th>
-                <th class="table-header-cell">Max Users</th>
-                <th class="table-header-cell">Jenjang Access</th>
-                <th class="table-header-cell">Expires</th>
+                <th class="table-header-cell">Kunci Lisensi</th>
+                <th class="table-header-cell">Tipe Lisensi</th>
+                <th class="table-header-cell">Maksimal Pengguna</th>
+                <th class="table-header-cell">Akses Jenjang</th>
+                <th class="table-header-cell">Tanggal Kadaluarsa</th>
                 <th class="table-header-cell">Status</th>
-                <th class="table-header-cell">Actions</th>
+                <th class="table-header-cell">Aksi</th>
               </tr>
             </thead>
             <tbody class="table-body">
@@ -163,7 +163,7 @@
                       variant="outline"
                       size="sm"
                     >
-                      Edit
+                      Ubah
                     </BaseButton>
                     <BaseButton
                       @click="toggleLicenseStatus(license)"
@@ -191,7 +191,7 @@
     <!-- Create/Edit Modal -->
     <BaseModal
       :isOpen="isModalOpen"
-      :title="isEditing ? 'Edit Lisensi' : 'Tambah Lisensi Baru'"
+      :title="isEditing ? 'Ubah Lisensi' : 'Tambah Lisensi Baru'"
       @close="closeModal"
       size="lg"
     >
@@ -199,8 +199,8 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <BaseInput
             v-model="form.license_key"
-            label="License Key"
-            placeholder="Masukkan license key"
+            label="Kunci Lisensi"
+            placeholder="Masukkan kunci lisensi"
             :error="errors.license_key"
             required
           />
@@ -215,16 +215,16 @@
           
           <BaseInput
             v-model.number="form.max_users"
-            label="Max Users"
+            label="Maksimal Pengguna"
             type="number"
-            placeholder="Masukkan max users"
+            placeholder="Masukkan maksimal pengguna"
             :error="errors.max_users"
             required
           />
           
           <BaseInput
             v-model="form.expires_at"
-            label="Tanggal Expired"
+            label="Tanggal Kadaluarsa"
             type="date"
             :error="errors.expires_at"
             required
@@ -244,7 +244,7 @@
             variant="primary"
             :loading="isSubmitting"
           >
-            {{ isEditing ? 'Update' : 'Simpan' }}
+            {{ isEditing ? 'Perbarui' : 'Simpan' }}
           </BaseButton>
         </div>
       </form>
