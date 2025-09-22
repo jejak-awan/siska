@@ -52,18 +52,18 @@
                   <p>Belum ada tahun akademik</p>
                 </td>
               </tr>
-              <tr v-for="academicYear in academicYears" :key="academicYear.id" class="hover:bg-gray-50">
+              <tr v-for="academicYear in academicYears" :key="academicYear?.id || Math.random()" v-if="academicYear" class="hover:bg-gray-50">
                 <td class="table-cell">
                   <div class="font-medium text-gray-900">
-                    {{ academicYear.tahun_mulai }}/{{ academicYear.tahun_selesai }}
+                    {{ academicYear?.tahun_mulai }}/{{ academicYear?.tahun_selesai }}
                   </div>
                 </td>
                 <td class="table-cell">
-                  <span class="badge badge-secondary">{{ academicYear.sekolah_id }}</span>
+                  <span class="badge badge-secondary">{{ academicYear?.sekolah_id }}</span>
                 </td>
                 <td class="table-cell">
                   <span
-                    :class="academicYear.is_active ? 'badge-success' : 'badge-secondary'"
+                    :class="academicYear?.is_active ? 'badge-success' : 'badge-secondary'"
                     class="badge"
                   >
                     {{ academicYear.is_active ? 'Aktif' : 'Nonaktif' }}

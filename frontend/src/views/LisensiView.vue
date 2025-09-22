@@ -54,14 +54,14 @@
                   <p>Belum ada lisensi</p>
                 </td>
               </tr>
-              <tr v-for="license in licenses" :key="license.id" class="hover:bg-gray-50">
+              <tr v-for="license in licenses" :key="license?.id || Math.random()" v-if="license" class="hover:bg-gray-50">
                 <td class="table-cell">
-                  <code class="text-sm bg-gray-100 px-2 py-1 rounded">{{ license.license_key }}</code>
+                  <code class="text-sm bg-gray-100 px-2 py-1 rounded">{{ license?.license_key }}</code>
                 </td>
                 <td class="table-cell">
-                  <span class="badge badge-primary">{{ license.license_type }}</span>
+                  <span class="badge badge-primary">{{ license?.license_type }}</span>
                 </td>
-                <td class="table-cell">{{ license.max_users }}</td>
+                <td class="table-cell">{{ license?.max_users }}</td>
                 <td class="table-cell">
                   <div class="flex flex-wrap gap-1">
                     <span

@@ -40,7 +40,8 @@
 
       <div
         v-for="school in schools"
-        :key="school.id"
+        :key="school?.id || Math.random()"
+        v-if="school"
         class="card hover:shadow-lg transition-shadow"
       >
         <div class="card-body">
@@ -48,9 +49,9 @@
             <div class="flex items-center">
               <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-3">
                 <img
-                  v-if="school.logo_url"
+                  v-if="school?.logo_url"
                   :src="school.logo_url"
-                  :alt="school.nama_sekolah"
+                  :alt="school?.nama_sekolah"
                   class="w-8 h-8 rounded"
                 />
                 <svg v-else class="w-6 h-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -58,11 +59,11 @@
                 </svg>
               </div>
               <div>
-                <h3 class="text-lg font-semibold text-gray-900">{{ school.nama_sekolah }}</h3>
-                <p class="text-sm text-gray-500">NPSN: {{ school.npsn }}</p>
+                <h3 class="text-lg font-semibold text-gray-900">{{ school?.nama_sekolah }}</h3>
+                <p class="text-sm text-gray-500">NPSN: {{ school?.npsn }}</p>
               </div>
             </div>
-            <span class="badge badge-primary">{{ school.jenjang }}</span>
+            <span class="badge badge-primary">{{ school?.jenjang }}</span>
           </div>
 
           <div class="space-y-2 mb-4">
@@ -71,13 +72,13 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
-              {{ school.alamat }}
+              {{ school?.alamat }}
             </div>
             <div class="flex items-center text-sm text-gray-600">
               <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
-              {{ school.kota }}, {{ school.provinsi }}
+              {{ school?.kota }}, {{ school?.provinsi }}
             </div>
           </div>
 
@@ -268,6 +269,8 @@ const openCreateModal = () => {
 }
 
 const openEditModal = (school: ProfilSekolah) => {
+  if (!school) return
+  
   isEditing.value = true
   editingId.value = school.id
   form.sekolah_id = school.sekolah_id
@@ -339,6 +342,8 @@ const submitForm = async () => {
 }
 
 const deleteSchool = async (school: ProfilSekolah) => {
+  if (!school) return
+  
   if (!confirm(`Apakah Anda yakin ingin menghapus profil sekolah ${school.nama_sekolah}?`)) {
     return
   }
