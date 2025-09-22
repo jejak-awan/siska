@@ -278,7 +278,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, reactive } from 'vue'
+import { ref, onMounted, reactive, computed } from 'vue'
 import { profilSekolahService, type ProfilSekolah, type CreateProfilSekolahData } from '@/services/profilSekolah'
 import { useToast } from 'vue-toastification'
 import BaseButton from '@/components/forms/BaseButton.vue'
