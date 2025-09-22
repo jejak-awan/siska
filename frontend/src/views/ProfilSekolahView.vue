@@ -135,7 +135,7 @@
                 <p class="text-sm text-gray-500">NPSN: {{ school?.npsn }}</p>
               </div>
             </div>
-            <span class="badge badge-primary">{{ school?.jenjang }}</span>
+            <span class="badge badge-primary">{{ Array.isArray(school?.jenjang_aktif) ? school.jenjang_aktif.join(', ') : school?.jenjang_aktif }}</span>
           </div>
 
           <div class="space-y-2 mb-4">
@@ -184,15 +184,6 @@
       <form @submit.prevent="submitForm" class="space-y-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <BaseInput
-            v-model.number="form.sekolah_id"
-            label="ID Sekolah"
-            type="number"
-            placeholder="Masukkan ID sekolah"
-            :error="errors.sekolah_id"
-            required
-          />
-          
-          <BaseInput
             v-model="form.nama_sekolah"
             label="Nama Sekolah"
             placeholder="Masukkan nama sekolah"
@@ -209,35 +200,49 @@
           />
           
           <BaseSelect
-            v-model="form.jenjang"
-            label="Jenjang"
+            v-model="form.jenis_sekolah"
+            label="Jenis Sekolah"
+            :options="jenisSekolahOptions"
+            :error="errors.jenis_sekolah"
+            required
+          />
+          
+          <BaseSelect
+            v-model="form.jenjang_aktif"
+            label="Jenjang Aktif"
             :options="jenjangOptions"
-            :error="errors.jenjang"
+            :error="errors.jenjang_aktif"
             required
           />
           
           <BaseInput
             v-model="form.alamat"
             label="Alamat"
-            placeholder="Masukkan alamat"
+            placeholder="Masukkan alamat lengkap"
             :error="errors.alamat"
             required
           />
           
           <BaseInput
-            v-model="form.kota"
-            label="Kota"
-            placeholder="Masukkan kota"
-            :error="errors.kota"
-            required
+            v-model="form.telepon"
+            label="Telepon"
+            placeholder="Masukkan nomor telepon"
+            :error="errors.telepon"
           />
           
           <BaseInput
-            v-model="form.provinsi"
-            label="Provinsi"
-            placeholder="Masukkan provinsi"
-            :error="errors.provinsi"
-            required
+            v-model="form.email"
+            label="Email"
+            type="email"
+            placeholder="Masukkan email"
+            :error="errors.email"
+          />
+          
+          <BaseInput
+            v-model="form.website"
+            label="Website"
+            placeholder="Masukkan website"
+            :error="errors.website"
           />
         </div>
 
@@ -303,13 +308,15 @@ const jenjangFilter = ref('')
 
 // Form data
 const form = reactive<CreateProfilSekolahData>({
-  sekolah_id: 0,
   nama_sekolah: '',
   npsn: '',
-  jenjang: '',
+  jenis_sekolah: 'negeri',
+  jenjang_aktif: ['SD'],
+  multi_jenjang: false,
   alamat: '',
-  kota: '',
-  provinsi: '',
+  telepon: '',
+  email: '',
+  website: '',
 })
 
 // Form errors
@@ -321,6 +328,13 @@ const jenjangOptions = [
   { value: 'SMP', label: 'Sekolah Menengah Pertama (SMP)' },
   { value: 'SMA', label: 'Sekolah Menengah Atas (SMA)' },
   { value: 'SMK', label: 'Sekolah Menengah Kejuruan (SMK)' },
+]
+
+// Jenis sekolah options
+const jenisSekolahOptions = [
+  { value: 'negeri', label: 'Negeri' },
+  { value: 'swasta', label: 'Swasta' },
+  { value: 'yayasan', label: 'Yayasan' },
 ]
 
 // Computed properties
@@ -340,7 +354,14 @@ const filteredSchools = computed(() => {
 
   // Jenjang filter
   if (jenjangFilter.value) {
-    filtered = filtered.filter(school => school?.jenjang === jenjangFilter.value)
+    filtered = filtered.filter(school => {
+      if (!jenjangFilter.value) return true
+      const jenjangAktif = school?.jenjang_aktif
+      if (Array.isArray(jenjangAktif)) {
+        return jenjangAktif.includes(jenjangFilter.value)
+      }
+      return jenjangAktif === jenjangFilter.value
+    })
   }
 
   return filtered
@@ -376,13 +397,14 @@ const openEditModal = (school: ProfilSekolah) => {
   
   isEditing.value = true
   editingId.value = school?.id
-  form.sekolah_id = school?.sekolah_id
   form.nama_sekolah = school?.nama_sekolah
   form.npsn = school?.npsn
-  form.jenjang = school?.jenjang
+  form.jenis_sekolah = school?.jenis_sekolah
+  form.jenjang_aktif = school?.jenjang_aktif
   form.alamat = school?.alamat
-  form.kota = school?.kota
-  form.provinsi = school?.provinsi
+  form.telepon = school?.telepon
+  form.email = school?.email
+  form.website = school?.website
   isModalOpen.value = true
 }
 
@@ -392,13 +414,15 @@ const closeModal = () => {
 }
 
 const resetForm = () => {
-  form.sekolah_id = 0
   form.nama_sekolah = ''
   form.npsn = ''
-  form.jenjang = ''
+  form.jenis_sekolah = 'negeri'
+  form.jenjang_aktif = ['SD']
+  form.multi_jenjang = false
   form.alamat = ''
-  form.kota = ''
-  form.provinsi = ''
+  form.telepon = ''
+  form.email = ''
+  form.website = ''
   if (logoInput.value) {
     logoInput.value.value = ''
   }
