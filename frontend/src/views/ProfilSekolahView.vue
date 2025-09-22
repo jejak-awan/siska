@@ -251,7 +251,8 @@ const loadSchools = async () => {
   isLoading.value = true
   try {
     const response = await profilSekolahService.getProfilSekolah()
-    schools.value = response.data || []
+    const schoolsData = response.data
+    schools.value = schoolsData?.data || schoolsData || []
   } catch (error: any) {
     toast.error(error.message || 'Gagal memuat daftar profil sekolah')
   } finally {

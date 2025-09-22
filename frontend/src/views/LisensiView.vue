@@ -233,7 +233,8 @@ const loadLicenses = async () => {
   isLoading.value = true
   try {
     const response = await licenseService.getLicenses()
-    licenses.value = response.data || []
+    const licensesData = response.data
+    licenses.value = licensesData?.data || licensesData || []
   } catch (error: any) {
     toast.error(error.message || 'Gagal memuat daftar lisensi')
   } finally {

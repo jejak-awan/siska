@@ -336,20 +336,23 @@ const loadDashboardData = async () => {
 
     // Process licenses data
     if (licensesResponse.status === 'fulfilled') {
-      const licenses = licensesResponse.value.data || []
-      stats.value.activeLicenses = licenses.filter((license: any) => license.is_active).length
+      const licensesData = licensesResponse.value.data
+      const licenses = licensesData?.data || licensesData || []
+      stats.value.activeLicenses = Array.isArray(licenses) ? licenses.filter((license: any) => license.is_active).length : 0
     }
 
     // Process schools data
     if (schoolsResponse.status === 'fulfilled') {
-      const schools = schoolsResponse.value.data || []
-      stats.value.totalSchools = schools.length
+      const schoolsData = schoolsResponse.value.data
+      const schools = schoolsData?.data || schoolsData || []
+      stats.value.totalSchools = Array.isArray(schools) ? schools.length : 0
     }
 
     // Process academic years data
     if (academicYearsResponse.status === 'fulfilled') {
-      const academicYears = academicYearsResponse.value.data || []
-      stats.value.academicYears = academicYears.length
+      const academicYearsData = academicYearsResponse.value.data
+      const academicYears = academicYearsData?.data || academicYearsData || []
+      stats.value.academicYears = Array.isArray(academicYears) ? academicYears.length : 0
     }
 
     // Update recent activity with real data

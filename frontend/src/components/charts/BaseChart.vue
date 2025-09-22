@@ -154,9 +154,18 @@ const createChart = () => {
   // Ensure canvas is ready
   if (!chartCanvas.value.getContext) return
   
+  // Validate data structure
+  if (!props.data || !props.data.labels || !Array.isArray(props.data.labels)) {
+    console.warn('Invalid chart data structure:', props.data)
+    return
+  }
+  
   const config: ChartConfiguration = {
     type: props.type,
-    data: props.data,
+    data: {
+      labels: props.data.labels || [],
+      datasets: props.data.datasets || []
+    },
     options: {
       ...defaultOptions,
       ...props.options,
@@ -174,7 +183,16 @@ const createChart = () => {
 const updateChart = () => {
   if (!chartInstance.value) return
   
-  chartInstance.value.data = props.data
+  // Validate data structure before updating
+  if (!props.data || !props.data.labels || !Array.isArray(props.data.labels)) {
+    console.warn('Invalid chart data structure for update:', props.data)
+    return
+  }
+  
+  chartInstance.value.data = {
+    labels: props.data.labels || [],
+    datasets: props.data.datasets || []
+  }
   chartInstance.value.update()
   updateLegend()
 }

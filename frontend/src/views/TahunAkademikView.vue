@@ -222,7 +222,8 @@ const loadAcademicYears = async () => {
   isLoading.value = true
   try {
     const response = await tahunAkademikService.getTahunAkademik()
-    academicYears.value = response.data || []
+    const academicYearsData = response.data
+    academicYears.value = academicYearsData?.data || academicYearsData || []
   } catch (error: any) {
     toast.error(error.message || 'Gagal memuat daftar tahun akademik')
   } finally {
