@@ -66,11 +66,11 @@
                     :class="academicYear?.is_active ? 'badge-success' : 'badge-secondary'"
                     class="badge"
                   >
-                    {{ academicYear.is_active ? 'Aktif' : 'Nonaktif' }}
+                    {{ academicYear?.is_active ? 'Aktif' : 'Nonaktif' }}
                   </span>
                 </td>
                 <td class="table-cell">
-                  {{ formatDate(academicYear.created_at) }}
+                  {{ formatDate(academicYear?.created_at) }}
                 </td>
                 <td class="table-cell">
                   <div class="flex space-x-2">
@@ -82,7 +82,7 @@
                       Edit
                     </BaseButton>
                     <BaseButton
-                      v-if="!academicYear.is_active"
+                      v-if="!academicYear?.is_active"
                       @click="activateAcademicYear(academicYear)"
                       variant="success"
                       size="sm"

@@ -50,7 +50,7 @@
               <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mr-3">
                 <img
                   v-if="school?.logo_url"
-                  :src="school.logo_url"
+                  :src="school?.logo_url"
                   :alt="school?.nama_sekolah"
                   class="w-8 h-8 rounded"
                 />

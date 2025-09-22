@@ -65,7 +65,7 @@
                 <td class="table-cell">
                   <div class="flex flex-wrap gap-1">
                     <span
-                      v-for="jenjang in license.jenjang_access"
+                      v-for="jenjang in license?.jenjang_access"
                       :key="jenjang"
                       class="badge badge-secondary text-xs"
                     >
@@ -74,14 +74,14 @@
                   </div>
                 </td>
                 <td class="table-cell">
-                  {{ formatDate(license.expires_at) }}
+                  {{ formatDate(license?.expires_at) }}
                 </td>
                 <td class="table-cell">
                   <span
-                    :class="license.is_active ? 'badge-success' : 'badge-danger'"
+                    :class="license?.is_active ? 'badge-success' : 'badge-danger'"
                     class="badge"
                   >
-                    {{ license.is_active ? 'Aktif' : 'Nonaktif' }}
+                    {{ license?.is_active ? 'Aktif' : 'Nonaktif' }}
                   </span>
                 </td>
                 <td class="table-cell">
@@ -95,10 +95,10 @@
                     </BaseButton>
                     <BaseButton
                       @click="toggleLicenseStatus(license)"
-                      :variant="license.is_active ? 'warning' : 'success'"
+                      :variant="license?.is_active ? 'warning' : 'success'"
                       size="sm"
                     >
-                      {{ license.is_active ? 'Nonaktifkan' : 'Aktifkan' }}
+                      {{ license?.is_active ? 'Nonaktifkan' : 'Aktifkan' }}
                     </BaseButton>
                     <BaseButton
                       @click="deleteLicense(license)"
