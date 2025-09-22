@@ -216,19 +216,25 @@ const destroyChart = () => {
   }
 }
 
-// Watch for data changes
+// Watch for data changes with debouncing
 watch(() => props.data, () => {
-  updateChart()
+  if (chartInstance.value) {
+    nextTick(() => {
+      updateChart()
+    })
+  }
 }, { deep: true })
 
-// Watch for options changes
+// Watch for options changes with debouncing
 watch(() => props.options, () => {
   if (chartInstance.value) {
-    chartInstance.value.options = {
-      ...defaultOptions,
-      ...props.options,
-    }
-    chartInstance.value.update()
+    nextTick(() => {
+      chartInstance.value.options = {
+        ...defaultOptions,
+        ...props.options,
+      }
+      chartInstance.value.update()
+    })
   }
 }, { deep: true })
 
