@@ -126,7 +126,7 @@
                   <p>Belum ada lisensi</p>
                 </td>
               </tr>
-              <tr v-for="license in filteredLicenses" :key="license?.id || Math.random()" v-if="license" class="hover:bg-gray-50">
+              <tr v-for="license in filteredLicenses" :key="license?.id || Math.random()" v-if="license && !isLoading" class="hover:bg-gray-50">
                 <td class="table-cell">
                   <code class="text-sm bg-gray-100 px-2 py-1 rounded">{{ license?.license_key }}</code>
                 </td>
@@ -269,6 +269,7 @@ const toast = useToast()
 
 // State
 const licenses = ref<License[]>([])
+const license = ref<License | null>(null)
 const isLoading = ref(false)
 const isModalOpen = ref(false)
 const isEditing = ref(false)
@@ -346,7 +347,7 @@ const loadLicenses = async () => {
   isLoading.value = true
   try {
     const response = await licenseService.getLicenses()
-    licenses.value = response.data || []
+    licenses.value = response.data?.data || []
   } catch (error: any) {
     toast.error(error.message || 'Gagal memuat daftar lisensi')
   } finally {

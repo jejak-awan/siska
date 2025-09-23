@@ -177,6 +177,45 @@ class LicenseService {
     }>('/licenses/validate', { license_key: licenseKey })
     return response.data
   }
+
+  /**
+   * Get available jenjang based on license
+   */
+  async getAvailableJenjang(): Promise<string[]> {
+    try {
+      const response = await api.get('/license/available-jenjang')
+      return response.data.data || []
+    } catch (error) {
+      console.error('Error fetching available jenjang:', error)
+      return []
+    }
+  }
+
+  /**
+   * Check if jenjang is available in license
+   */
+  async isJenjangAvailable(jenjang: string): Promise<boolean> {
+    try {
+      const availableJenjang = await this.getAvailableJenjang()
+      return availableJenjang.includes(jenjang)
+    } catch (error) {
+      console.error('Error checking jenjang availability:', error)
+      return false
+    }
+  }
+
+  /**
+   * Get license features for specific jenjang
+   */
+  async getJenjangFeatures(jenjang: string): Promise<string[]> {
+    try {
+      const response = await api.get(`/license/jenjang/${jenjang}/features`)
+      return response.data.data || []
+    } catch (error) {
+      console.error('Error fetching jenjang features:', error)
+      return []
+    }
+  }
 }
 
 export const licenseService = new LicenseService()

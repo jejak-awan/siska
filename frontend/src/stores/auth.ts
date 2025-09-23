@@ -29,14 +29,16 @@ export const useAuthStore = defineStore('auth', () => {
         
         // Store token in localStorage
         localStorage.setItem('auth_token', response.data.token)
+        localStorage.setItem('user_data', JSON.stringify(response.data.user))
         
-        // Token will be automatically set by API interceptor
+        console.log('Login successful, token stored:', response.data.token)
         
         return response
       } else {
         throw new Error(response.message || 'Login gagal')
       }
     } catch (error: any) {
+      console.error('Login error:', error)
       throw error
     } finally {
       isLoading.value = false
@@ -57,7 +59,31 @@ export const useAuthStore = defineStore('auth', () => {
       token.value = null
       user.value = null
       localStorage.removeItem('auth_token')
+      localStorage.removeItem('user_data')
       isLoading.value = false
+    }
+  }
+
+  const initializeAuth = async (): Promise<void> => {
+    try {
+      const storedToken = localStorage.getItem('auth_token')
+      const storedUser = localStorage.getItem('user_data')
+      
+      if (storedToken && storedUser) {
+        token.value = storedToken
+        user.value = JSON.parse(storedUser)
+        
+        // Verify token is still valid
+        try {
+          await authService.checkAuth()
+        } catch (error) {
+          // Token is invalid, clear auth data
+          logout()
+        }
+      }
+    } catch (error) {
+      console.error('Auth initialization error:', error)
+      logout()
     }
   }
 
@@ -155,14 +181,6 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  // Initialize auth token if exists
-  const initializeAuth = () => {
-    const storedToken = localStorage.getItem('auth_token')
-    if (storedToken) {
-      token.value = storedToken
-      // Token will be automatically set by API interceptor
-    }
-  }
 
   return {
     // State

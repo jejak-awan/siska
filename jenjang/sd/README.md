@@ -1,181 +1,212 @@
-# 🎒 **MODUL SD (SEKOLAH DASAR)**
+# 🎒 **SD MODULE - SEKOLAH DASAR**
 
-## 📋 **INFORMASI PROYEK**
+## 📋 **INFORMASI MODULE**
 
-**SISKA** (Sistem Informasi Sekolah Bidang Kesiswaan)  
-**Pengembang**: [jejakawan.com](https://jejakawan.com)  
-**GitHub**: [@jejak-awan](https://github.com/jejak-awan) | [@k2netid](https://github.com/k2netid)  
-**Supported by**: **K2NET** - PT. Kirana Karina Network  
-*"Provide Different IT Solutions"*
+**Nama**: SD Module  
+**Display Name**: Sekolah Dasar  
+**Versi**: 1.0.0  
+**Database**: `siska_sd`  
+**Namespace**: `App\Jenjang\SD`
 
-## 🎯 **OVERVIEW**
+## 🎯 **DESKRIPSI**
 
-Modul SD adalah bagian dari sistem SISKA yang khusus dirancang untuk mengelola kesiswaan di tingkat Sekolah Dasar (SD). Modul ini memiliki database terpisah (`siska_sd`) dan fitur-fitur yang disesuaikan dengan karakteristik siswa SD.
+Module SD (Sekolah Dasar) adalah modul khusus untuk manajemen siswa SD dengan fokus pada:
+- Karakter dasar
+- Kebersihan
+- Kedisiplinan
+- Penilaian karakter
+- Kredit poin
 
-## 🏗️ **STRUKTUR MODUL SD**
+## 🏗️ **STRUKTUR MODULE**
 
 ```
 sd/
 ├── app/
-│   ├── Controllers/
-│   │   ├── SiswaController.php
-│   │   ├── PresensiController.php
-│   │   ├── KreditPoinController.php
-│   │   └── PenilaianKarakterController.php
-│   ├── Models/
-│   │   ├── Siswa.php
-│   │   ├── Presensi.php
-│   │   ├── KreditPoin.php
-│   │   └── PenilaianKarakter.php
-│   └── Services/
-│       ├── SiswaService.php
-│       ├── PresensiService.php
-│       └── KreditPoinService.php
-├── config/
-│   └── sd.php
+│   ├── Http/
+│   │   ├── Controllers/           # Controllers untuk SD
+│   │   ├── Requests/              # Form requests
+│   │   └── Resources/             # API resources
+│   ├── Models/                    # Models untuk SD
+│   ├── Services/                  # Business logic
+│   └── Providers/                 # Service providers
 ├── database/
-│   ├── migrations/
-│   │   ├── create_siswa_table.php
-│   │   ├── create_presensi_table.php
-│   │   ├── create_kredit_poin_table.php
-│   │   └── create_penilaian_karakter_table.php
-│   └── seeders/
-│       ├── SiswaSeeder.php
-│       └── SDSeeder.php
-└── routes/
-    └── api.php
+│   ├── migrations/                # Database migrations
+│   └── seeders/                   # Database seeders
+├── routes/
+│   └── api.php                    # API routes
+├── config/
+│   └── sd.php                     # Module configuration
+└── README.md                      # Documentation
 ```
 
-## 📊 **DATABASE SD**
-
-### **Database**: `siska_sd`
-
-### **Tabel Utama**:
-- `siswa_sd` - Data siswa SD
-- `presensi_sd` - Presensi siswa SD
-- `kredit_poin_sd` - Kredit poin siswa SD
-- `penilaian_karakter_sd` - Penilaian karakter siswa SD
-- `kelas_sd` - Data kelas SD
-- `guru_sd` - Data guru SD
-
-## 🎯 **FITUR KHUSUS SD**
+## 🔧 **FITUR MODULE**
 
 ### **1. Manajemen Siswa**
-- **Kelas**: 1, 2, 3, 4, 5, 6
-- **Usia**: 6-12 tahun
-- **Karakteristik**: Fokus pada pengembangan karakter dasar
+- CRUD siswa SD
+- Data pribadi siswa
+- Data orang tua
+- Kelas dan NIS/NISN
 
-### **2. Presensi**
-- **QR Code**: Presensi dengan QR code
-- **Notifikasi**: Notifikasi ke orang tua via WhatsApp
-- **Laporan**: Laporan presensi harian/mingguan/bulanan
+### **2. Presensi Siswa**
+- Presensi harian
+- Status presensi (hadir, izin, sakit, alpha)
+- Bulk presensi
+- Statistik presensi
 
 ### **3. Kredit Poin**
-- **Kategori**: Disiplin, Kerapihan, Kerjasama, Tanggung Jawab
-- **Skala**: 1-4 (Sangat Baik, Baik, Cukup, Kurang)
-- **Reward**: Sistem reward sederhana
+- Sistem kredit poin positif/negatif
+- Penilaian karakter
+- Semester dan tahun akademik
+- Statistik kredit poin
 
-### **4. Penilaian Karakter**
-- **Aspek**: Jujur, Disiplin, Tanggung Jawab, Santun
-- **Metode**: Observasi, Portofolio, Self Assessment
-- **Laporan**: Laporan perkembangan karakter
+### **4. Program Kesiswaan**
+- Program khusus SD
+- Kategori: karakter dasar, kebersihan, kedisiplinan
+- Manajemen peserta
+- Statistik program
 
-## 🔧 **KONFIGURASI SD**
+### **5. Penilaian Karakter**
+- Penilaian aspek karakter
+- Nilai karakter
+- Catatan penilaian
+- Statistik penilaian
 
-### **Kelas**:
+## 🗄️ **DATABASE TABLES**
+
+| Table | Description |
+|-------|-------------|
+| `users_sd` | User accounts untuk SD |
+| `siswa_sd` | Data siswa SD |
+| `presensi_sd` | Data presensi siswa |
+| `kredit_poin_sd` | Data kredit poin |
+| `program_kesiswaan_sd` | Program kesiswaan SD |
+| `penilaian_karakter_sd` | Penilaian karakter siswa |
+
+## 🚀 **INSTALLATION**
+
+### **1. Register Service Provider**
 ```php
-'kelas' => ['1', '2', '3', '4', '5', '6']
+// config/app.php
+'providers' => [
+    // ...
+    App\Jenjang\SD\Providers\SDServiceProvider::class,
+],
 ```
 
-### **Mata Pelajaran**:
-```php
-'mata_pelajaran' => [
-    'Matematika',
-    'Bahasa Indonesia', 
-    'IPA',
-    'IPS',
-    'PKn',
-    'Seni',
-    'Olahraga'
-]
-```
-
-### **Program Kesiswaan**:
-```php
-'program' => [
-    'karakter_dasar',
-    'kebersihan',
-    'kedisiplinan'
-]
-```
-
-### **Aspek Karakter**:
-```php
-'aspek' => [
-    'jujur',
-    'disiplin', 
-    'tanggung_jawab',
-    'santun'
-]
-```
-
-## 🚀 **INSTALASI**
-
+### **2. Publish Configuration**
 ```bash
-# Setup database SD
-mysql -u root -p -e "CREATE DATABASE siska_sd CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-
-# Run migrations
-php artisan migrate --database=sd
-
-# Run seeders
-php artisan db:seed --class=SDSeeder --database=sd
+php artisan vendor:publish --tag=sd-config
 ```
 
-## 📚 **API ENDPOINTS**
+### **3. Run Migrations**
+```bash
+php artisan migrate --path=database/migrations/sd
+```
 
-### **Siswa**:
-- `GET /api/sd/siswa` - List siswa
-- `POST /api/sd/siswa` - Create siswa
-- `PUT /api/sd/siswa/{id}` - Update siswa
-- `DELETE /api/sd/siswa/{id}` - Delete siswa
+### **4. Seed Database (Optional)**
+```bash
+php artisan db:seed --class=SDDatabaseSeeder
+```
 
-### **Presensi**:
-- `GET /api/sd/presensi` - List presensi
-- `POST /api/sd/presensi` - Create presensi
-- `GET /api/sd/presensi/laporan` - Laporan presensi
+## 📡 **API ENDPOINTS**
 
-### **Kredit Poin**:
-- `GET /api/sd/kredit-poin` - List kredit poin
-- `POST /api/sd/kredit-poin` - Create kredit poin
-- `GET /api/sd/kredit-poin/siswa/{id}` - Kredit poin siswa
+### **Siswa**
+- `GET /api/jenjang/sd/siswa` - List siswa
+- `POST /api/jenjang/sd/siswa` - Create siswa
+- `GET /api/jenjang/sd/siswa/{id}` - Get siswa
+- `PUT /api/jenjang/sd/siswa/{id}` - Update siswa
+- `DELETE /api/jenjang/sd/siswa/{id}` - Delete siswa
+- `GET /api/jenjang/sd/siswa/statistics` - Statistics
+
+### **Presensi**
+- `GET /api/jenjang/sd/presensi` - List presensi
+- `POST /api/jenjang/sd/presensi` - Create presensi
+- `POST /api/jenjang/sd/presensi/bulk` - Bulk create presensi
+- `GET /api/jenjang/sd/presensi/statistics` - Statistics
+
+### **Kredit Poin**
+- `GET /api/jenjang/sd/kredit-poin` - List kredit poin
+- `POST /api/jenjang/sd/kredit-poin` - Create kredit poin
+- `GET /api/jenjang/sd/kredit-poin/statistics` - Statistics
+
+### **Program Kesiswaan**
+- `GET /api/jenjang/sd/program-kesiswaan` - List program
+- `POST /api/jenjang/sd/program-kesiswaan` - Create program
+- `GET /api/jenjang/sd/program-kesiswaan/{id}/participants` - Get participants
+
+## ⚙️ **CONFIGURATION**
+
+### **Module Settings**
+```php
+// config/sd.php
+'settings' => [
+    'max_siswa_per_kelas' => 30,
+    'max_poin_per_semester' => 100,
+    'auto_presensi_timeout' => 30,
+    'enable_kredit_poin' => true,
+    'enable_penilaian_karakter' => true,
+]
+```
+
+### **Database Connection**
+```php
+// config/database.php
+'connections' => [
+    'sd' => [
+        'driver' => 'mysql',
+        'host' => env('DB_HOST', '127.0.0.1'),
+        'port' => env('DB_PORT', '3306'),
+        'database' => env('DB_SD_DATABASE', 'siska_sd'),
+        'username' => env('DB_USERNAME', 'root'),
+        'password' => env('DB_PASSWORD', ''),
+        // ...
+    ],
+],
+```
 
 ## 🔐 **PERMISSIONS**
 
-### **Admin**:
-- Full access ke semua fitur SD
+| Role | Permissions |
+|------|-------------|
+| Admin | All permissions |
+| Guru | Read siswa, Full presensi, Full kredit poin, Read program |
+| Wali Kelas | Read siswa, Full presensi, Full kredit poin, Read program |
+| Siswa | Read own data only |
 
-### **Guru**:
-- Access ke kelas yang diampu
-- Input presensi dan kredit poin
-- View laporan siswa
+## 🧪 **TESTING**
 
-### **Wali Kelas**:
-- Access ke kelas yang diampu
-- Input presensi dan kredit poin
-- View laporan kelas
+```bash
+# Run SD module tests
+php artisan test --path=jenjang/sd/tests
 
-### **Orang Tua**:
-- View data anak
-- View presensi dan kredit poin
-- Terima notifikasi
+# Run specific test
+php artisan test --path=jenjang/sd/tests/Feature/SiswaSDTest.php
+```
 
-## 📞 **SUPPORT**
+## 📝 **CHANGELOG**
 
-- **GitHub**: [@jejak-awan](https://github.com/jejak-awan) | [@k2netid](https://github.com/k2netid)
-- **Website**: [jejakawan.com](https://jejakawan.com)
-- **Company**: K2NET - PT. Kirana Karina Network
+### **v1.0.0** (2024-01-01)
+- Initial release
+- Basic CRUD operations
+- Presensi system
+- Kredit poin system
+- Program kesiswaan
+- Penilaian karakter
+
+## 🤝 **CONTRIBUTING**
+
+1. Fork the repository
+2. Create feature branch
+3. Commit changes
+4. Push to branch
+5. Create Pull Request
+
+## 📄 **LICENSE**
+
+This module is part of SISKA project and follows the same license terms.
 
 ---
 
-**SISKA SD** - Mengembangkan karakter siswa SD dengan teknologi modern! 🎒✨
+**SISKA** - Sistem Informasi Sekolah Bidang Kesiswaan  
+**Developed by**: [jejakawan.com](https://jejakawan.com)  
+**Supported by**: **K2NET** - PT. Kirana Karina Network

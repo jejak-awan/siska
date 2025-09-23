@@ -16,4 +16,17 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
-    })->create();
+    })
+    ->withProviders([
+        // Core Service Providers
+        App\Providers\AppServiceProvider::class,
+        
+        // Jenjang Service Providers (temporarily disabled for testing)
+        // App\Jenjang\SD\Providers\SDServiceProvider::class,
+        // App\Jenjang\SMP\Providers\SMPServiceProvider::class,
+        // App\Jenjang\SMA\Providers\SMAServiceProvider::class,
+        // App\Jenjang\SMK\Providers\SMKServiceProvider::class,
+        
+        // Installer Service Provider (temporarily disabled)
+        // App\Installer\Providers\InstallerServiceProvider::class,
+    ])->create();

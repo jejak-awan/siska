@@ -217,24 +217,32 @@ const destroyChart = () => {
 }
 
 // Watch for data changes with debouncing
-watch(() => props.data, () => {
-  if (chartInstance.value) {
-    nextTick(() => {
-      updateChart()
-    })
+watch(() => props.data, (newData, oldData) => {
+  if (chartInstance.value && newData !== oldData) {
+    // Prevent recursion by checking if data actually changed
+    const dataChanged = JSON.stringify(newData) !== JSON.stringify(oldData)
+    if (dataChanged) {
+      nextTick(() => {
+        updateChart()
+      })
+    }
   }
 }, { deep: true })
 
 // Watch for options changes with debouncing
-watch(() => props.options, () => {
-  if (chartInstance.value) {
-    nextTick(() => {
-      chartInstance.value.options = {
-        ...defaultOptions,
-        ...props.options,
-      }
-      chartInstance.value.update()
-    })
+watch(() => props.options, (newOptions, oldOptions) => {
+  if (chartInstance.value && newOptions !== oldOptions) {
+    // Prevent recursion by checking if options actually changed
+    const optionsChanged = JSON.stringify(newOptions) !== JSON.stringify(oldOptions)
+    if (optionsChanged) {
+      nextTick(() => {
+        chartInstance.value.options = {
+          ...defaultOptions,
+          ...props.options,
+        }
+        chartInstance.value.update()
+      })
+    }
   }
 }, { deep: true })
 

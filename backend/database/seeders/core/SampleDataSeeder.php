@@ -312,3 +312,4 @@ class SampleDataSeeder extends Seeder
         DB::table('tahun_akademik')->insert($academicYears);
     }
 }
+

@@ -27,11 +27,11 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin123'),
             'role_type' => 'admin',
             'status' => 'aktif',
-            'profile_data' => [
+            'profile_data' => json_encode([
                 'nama_lengkap' => 'Administrator SISKA',
                 'telepon' => '081234567890',
                 'alamat' => 'Jl. Contoh No. 123, Jakarta',
-            ],
+            ]),
         ]);
 
         // Create guru user
@@ -41,12 +41,12 @@ class UserSeeder extends Seeder
             'password' => Hash::make('guru123'),
             'role_type' => 'guru',
             'status' => 'aktif',
-            'profile_data' => [
+            'profile_data' => json_encode([
                 'nama_lengkap' => 'Guru Contoh',
                 'telepon' => '081234567891',
                 'alamat' => 'Jl. Guru No. 456, Jakarta',
                 'mata_pelajaran' => 'Matematika',
-            ],
+            ]),
         ]);
 
         // Create siswa user
@@ -56,13 +56,13 @@ class UserSeeder extends Seeder
             'password' => Hash::make('siswa123'),
             'role_type' => 'siswa',
             'status' => 'aktif',
-            'profile_data' => [
+            'profile_data' => json_encode([
                 'nama_lengkap' => 'Siswa Contoh',
                 'telepon' => '081234567892',
                 'alamat' => 'Jl. Siswa No. 789, Jakarta',
                 'kelas' => 'X-A',
                 'nis' => '2024001',
-            ],
+            ]),
         ]);
 
         $this->command->info('User seeder berhasil dijalankan!');

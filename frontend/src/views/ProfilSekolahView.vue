@@ -113,7 +113,7 @@
       <div
         v-for="school in filteredSchools"
         :key="school?.id || Math.random()"
-        v-if="school"
+        v-if="school && !isLoading"
         class="card hover:shadow-lg transition-shadow"
       >
         <div class="card-body">
@@ -295,6 +295,7 @@ const toast = useToast()
 
 // State
 const schools = ref<ProfilSekolah[]>([])
+const school = ref<ProfilSekolah | null>(null)
 const isLoading = ref(false)
 const isModalOpen = ref(false)
 const isEditing = ref(false)
@@ -376,7 +377,7 @@ const loadSchools = async () => {
   isLoading.value = true
   try {
     const response = await profilSekolahService.getProfilSekolah()
-    schools.value = response.data || []
+    schools.value = response.data?.data || []
   } catch (error: any) {
     toast.error(error.message || 'Gagal memuat daftar profil sekolah')
   } finally {

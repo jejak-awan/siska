@@ -6,6 +6,8 @@ import 'vue-toastification/dist/index.css'
 
 import App from './App.vue'
 import routes from './router'
+import { setupRouterGuards } from './router/guards'
+import { useAuthStore } from './stores/auth'
 import './assets/css/main.css'
 
 // Create Vue app
@@ -19,6 +21,9 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 })
+
+// Setup router guards
+setupRouterGuards(router)
 
 // Toast configuration
 const toastOptions = {
@@ -40,6 +45,10 @@ const toastOptions = {
 app.use(pinia)
 app.use(router)
 app.use(Toast, toastOptions)
+
+// Initialize auth after pinia is set up
+const authStore = useAuthStore()
+authStore.initializeAuth()
 
 // Mount app
 app.mount('#app')

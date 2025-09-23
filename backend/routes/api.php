@@ -2,64 +2,98 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Core\LicenseController;
-use App\Http\Controllers\Core\ProfilSekolahController;
-use App\Http\Controllers\Core\TahunAkademikController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LicenseController;
+use App\Http\Controllers\SchoolProfileController;
+use App\Http\Controllers\TahunAkademikController;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes untuk SISKA Backend System
+| API Routes
 |--------------------------------------------------------------------------
 |
-| API routes untuk authentication dan core system
-| 
-| @author jejakawan.com
-| @supported K2NET - PT. Kirana Karina Network
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "api" middleware group. Make something great!
 |
 */
 
-// Public routes (tidak perlu authentication)
+// Public routes (no authentication required)
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('validate-license', [LicenseController::class, 'validateLicense']);
 });
 
-// Protected routes (perlu authentication)
+// Protected routes (authentication required)
 Route::middleware('auth:sanctum')->group(function () {
-    // Authentication routes
+    
+    // Auth routes
     Route::prefix('auth')->group(function () {
         Route::post('logout', [AuthController::class, 'logout']);
-        Route::get('profile', [AuthController::class, 'profile']);
-        Route::put('profile', [AuthController::class, 'updateProfile']);
-        Route::post('refresh', [AuthController::class, 'refresh']);
+        Route::get('me', [AuthController::class, 'me']);
         Route::get('check', [AuthController::class, 'check']);
+        Route::post('refresh', [AuthController::class, 'refresh']);
+        Route::post('change-password', [AuthController::class, 'changePassword']);
+        Route::post('update-profile', [AuthController::class, 'updateProfile']);
+        Route::post('check-permission', [AuthController::class, 'checkPermission']);
     });
 
-    // Core system routes
-    Route::get('/user', function (Request $request) {
-        return response()->json([
-            'success' => true,
-            'message' => 'Data user berhasil diambil',
-            'data' => [
-                'user' => $request->user()
-            ]
-        ]);
-    });
-
-    // License management routes
+    // License routes
     Route::apiResource('licenses', LicenseController::class);
-    Route::post('licenses/{license}/activate', [LicenseController::class, 'activate']);
-    Route::post('licenses/{license}/deactivate', [LicenseController::class, 'deactivate']);
-    Route::get('licenses/{license}/check', [LicenseController::class, 'check']);
+    Route::prefix('licenses')->group(function () {
+        Route::post('{id}/activate', [LicenseController::class, 'activate']);
+        Route::post('{id}/deactivate', [LicenseController::class, 'deactivate']);
+        Route::get('{id}/usage', [LicenseController::class, 'usage']);
+        Route::get('active', [LicenseController::class, 'active']);
+        Route::get('expired', [LicenseController::class, 'expired']);
+        Route::get('expiring-soon', [LicenseController::class, 'expiringSoon']);
+        Route::get('statistics', [LicenseController::class, 'statistics']);
+        Route::post('generate-key', [LicenseController::class, 'generateKey']);
+    });
 
-    // School profile routes
-    Route::apiResource('profil-sekolah', ProfilSekolahController::class);
-    Route::get('profil-sekolah/npsn/{npsn}', [ProfilSekolahController::class, 'getByNpsn']);
-    Route::get('profil-sekolah/jenjang/{jenjang}', [ProfilSekolahController::class, 'getByJenjang']);
+    // School Profile routes
+    Route::apiResource('profil-sekolah', SchoolProfileController::class);
+    Route::prefix('profil-sekolah')->group(function () {
+        Route::post('{id}/activate', [SchoolProfileController::class, 'activate']);
+        Route::post('{id}/deactivate', [SchoolProfileController::class, 'deactivate']);
+        Route::get('npsn/{npsn}', [SchoolProfileController::class, 'getByNPSN']);
+        Route::get('jenjang/{jenjang}', [SchoolProfileController::class, 'getByJenjang']);
+        Route::get('provinsi/{provinsi}', [SchoolProfileController::class, 'getByProvince']);
+        Route::get('kota/{kabupaten_kota}', [SchoolProfileController::class, 'getByCity']);
+        Route::get('active', [SchoolProfileController::class, 'active']);
+        Route::get('statistics', [SchoolProfileController::class, 'statistics']);
+        Route::get('search', [SchoolProfileController::class, 'search']);
+        Route::get('coordinates', [SchoolProfileController::class, 'getByCoordinates']);
+    });
 
-    // Academic year routes
+    // Academic Year routes
     Route::apiResource('tahun-akademik', TahunAkademikController::class);
-    Route::post('tahun-akademik/{tahunAkademik}/activate', [TahunAkademikController::class, 'activate']);
-    Route::get('tahun-akademik/active', [TahunAkademikController::class, 'getActive']);
-    Route::get('tahun-akademik/sekolah/{sekolah}', [TahunAkademikController::class, 'getBySchool']);
+    Route::prefix('tahun-akademik')->group(function () {
+        Route::post('{id}/activate', [TahunAkademikController::class, 'activate']);
+        Route::post('{id}/deactivate', [TahunAkademikController::class, 'deactivate']);
+        Route::get('active', [TahunAkademikController::class, 'getActive']);
+        Route::get('active-years', [TahunAkademikController::class, 'getActiveYears']);
+        Route::get('current-years', [TahunAkademikController::class, 'getCurrentYears']);
+        Route::get('past', [TahunAkademikController::class, 'getPast']);
+        Route::get('future', [TahunAkademikController::class, 'getFuture']);
+        Route::get('year/{tahun}', [TahunAkademikController::class, 'getByYear']);
+        Route::get('semester/{semester}', [TahunAkademikController::class, 'getBySemester']);
+        Route::get('year/{tahun}/semester/{semester}', [TahunAkademikController::class, 'getByYearAndSemester']);
+        Route::get('next', [TahunAkademikController::class, 'getNext']);
+        Route::get('previous', [TahunAkademikController::class, 'getPrevious']);
+        Route::get('statistics', [TahunAkademikController::class, 'statistics']);
+    });
+
+    // Note: Jenjang-specific routes have been moved to individual jenjang modules
+    // Routes are now handled by each jenjang's service provider
+});
+
+// Health check route
+Route::get('health', function () {
+    return response()->json([
+        'status' => 'ok',
+        'timestamp' => now(),
+        'version' => '1.0.0'
+    ]);
 });

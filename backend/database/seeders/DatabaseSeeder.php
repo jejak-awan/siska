@@ -21,6 +21,13 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             SampleDataSeeder::class,
+            // Jenjang-specific seeders
+            \Jenjang\SD\Database\Seeders\SDSampleDataSeeder::class,
+            \Jenjang\SMP\Database\Seeders\SMPSampleDataSeeder::class,
+            \Jenjang\SMA\Database\Seeders\SMASampleDataSeeder::class,
+            \Jenjang\SMK\Database\Seeders\SMKSampleDataSeeder::class,
+            // Presensi data
+            PresensiSampleDataSeeder::class,
         ]);
     }
 }

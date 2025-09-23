@@ -7,52 +7,97 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-/**
- * Model User untuk SISKA Backend System
- * 
- * @package App\Models
- * @author jejakawan.com
- * @supported K2NET - PT. Kirana Karina Network
- */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $connection = 'backend';
-
-    /**
-     * The attributes that are mass assignable.
-     */
     protected $fillable = [
-        'username',
+        'name',
         'email',
         'password',
-        'role_type',
+        'role',
         'status',
-        'last_login_at',
-        'profile_data',
+        'last_login_at'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'last_login_at' => 'datetime',
-        'profile_data' => 'array',
         'password' => 'hashed',
     ];
 
     /**
-     * Scope untuk user aktif
+     * Check if user is active
+     */
+    public function isActive(): bool
+    {
+        return $this->status === 'aktif';
+    }
+
+    /**
+     * Check if user is admin
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Check if user is teacher
+     */
+    public function isTeacher(): bool
+    {
+        return $this->role === 'guru';
+    }
+
+    /**
+     * Check if user is student
+     */
+    public function isStudent(): bool
+    {
+        return $this->role === 'siswa';
+    }
+
+    /**
+     * Get user role display name
+     */
+    public function getRoleDisplayNameAttribute(): string
+    {
+        return match($this->role) {
+            'admin' => 'Administrator',
+            'guru' => 'Guru',
+            'siswa' => 'Siswa',
+            default => 'Unknown'
+        };
+    }
+
+    /**
+     * Get user status display name
+     */
+    public function getStatusDisplayNameAttribute(): string
+    {
+        return match($this->status) {
+            'aktif' => 'Aktif',
+            'nonaktif' => 'Nonaktif',
+            default => 'Unknown'
+        };
+    }
+
+    /**
+     * Update last login time
+     */
+    public function updateLastLogin(): void
+    {
+        $this->update(['last_login_at' => now()]);
+    }
+
+    /**
+     * Scope for active users
      */
     public function scopeActive($query)
     {
@@ -60,42 +105,50 @@ class User extends Authenticatable
     }
 
     /**
-     * Scope untuk user berdasarkan role
+     * Scope for specific role
      */
-    public function scopeByRole($query, $role)
+    public function scopeWithRole($query, string $role)
     {
-        return $query->where('role_type', $role);
+        return $query->where('role', $role);
     }
 
     /**
-     * Cek apakah user adalah admin
+     * Scope for admins
      */
-    public function isAdmin()
+    public function scopeAdmins($query)
     {
-        return $this->role_type === 'admin';
+        return $query->where('role', 'admin');
     }
 
     /**
-     * Cek apakah user adalah guru
+     * Scope for teachers
      */
-    public function isGuru()
+    public function scopeTeachers($query)
     {
-        return $this->role_type === 'guru';
+        return $query->where('role', 'guru');
     }
 
     /**
-     * Cek apakah user adalah siswa
+     * Scope for students
      */
-    public function isSiswa()
+    public function scopeStudents($query)
     {
-        return $this->role_type === 'siswa';
+        return $query->where('role', 'siswa');
     }
 
     /**
-     * Update last login timestamp
+     * Get user statistics
      */
-    public function updateLastLogin()
+    public function getStatistics(): array
     {
-        $this->update(['last_login_at' => now()]);
+        return [
+            'is_active' => $this->isActive(),
+            'role' => $this->role,
+            'role_display' => $this->role_display_name,
+            'status' => $this->status,
+            'status_display' => $this->status_display_name,
+            'last_login' => $this->last_login_at,
+            'days_since_last_login' => $this->last_login_at ? $this->last_login_at->diffInDays(now()) : null
+        ];
     }
 }
